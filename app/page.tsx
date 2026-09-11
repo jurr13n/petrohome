@@ -31,7 +31,7 @@ export default function Home() {
   const EMPTY_AANVRAAG = { naam: '', bedrijf: '', email: '', telefoon: '', bericht: '', website: '' };
   const [aanvraag, setAanvraag] = useState(EMPTY_AANVRAAG);
   const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
-  const demoUrl = (process.env.NEXT_PUBLIC_DEMO_URL || 'https://demo.petroshift.nl').trim();
+  const demoUrl = (process.env.NEXT_PUBLIC_DEMO_URL || 'https://app.petroshift.nl').trim();
   const email = (process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@petroshift.nl').trim();
   const bookingUrl = demoUrl && /^https:\/\//i.test(demoUrl) ? demoUrl : undefined;
   const contactEmail = (email && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ? email : undefined) || 'info@petroshift.nl';
