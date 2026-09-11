@@ -1,6 +1,6 @@
 # PetroShift — landingpage
 
-Een complete Nederlandse B2B-landingspagina voor industriële ploegendiensten, gebouwd met Next.js, React en TypeScript. De site kan als statische website op Vercel draaien. Er is geen database of server nodig.
+Een complete Nederlandse B2B-landingspagina voor industriële ploegendiensten, gebouwd met Next.js, React en TypeScript. De pagina's zijn statisch; het aanvraagformulier gebruikt één serverless functie (`app/api/aanvraag/route.ts`) om de aanvraag via Resend te versturen. Er is geen database nodig.
 
 ## Snel starten
 
@@ -40,6 +40,16 @@ De website is direct gekoppeld aan de aangeleverde adressen:
 - E-mail: info@petroshift.nl (klikbare e-maillink in de footer).
 
 Er zijn geen omgevingsvariabelen nodig om deze links te activeren. Je kunt de demo-URL en het contactadres later overschrijven met `NEXT_PUBLIC_DEMO_URL` en `NEXT_PUBLIC_CONTACT_EMAIL`. Kopieer `.env.example` naar `.env.local` voor lokaal gebruik of stel de waarden in op Vercel. Na een wijziging moet je opnieuw bouwen. Deze waarden zijn openbaar; gebruik hier geen geheimen.
+
+### Aanvraagformulier laten versturen
+
+Het formulier onderaan de pagina post naar `/api/aanvraag`, dat de aanvraag via [Resend](https://resend.com) e-mailt naar `info@petroshift.nl`. Zonder de onderstaande server-only variabele (geen `NEXT_PUBLIC_`-prefix, dus niet openbaar) toont het formulier een duidelijke foutmelding in plaats van de aanvraag stil te laten verdwijnen:
+
+- `RESEND_API_KEY` — verplicht. Gratis account op resend.com, API key aanmaken, toevoegen bij Vercel → Project → Settings → Environment Variables (Production én Preview).
+- `CONTACT_EMAIL` — optioneel, standaard `info@petroshift.nl`.
+- `RESEND_FROM` — optioneel, standaard `PetroShift <onboarding@resend.dev>` (werkt direct, zonder domeinverificatie). Voor een eigen afzenderadres (bv. `aanvraag@petroshift.nl`) moet het domein `petroshift.nl` eerst geverifieerd worden bij Resend (DNS-records); zet daarna deze variabele.
+
+Na het toevoegen van een omgevingsvariabele in Vercel is een nieuwe deploy nodig voordat hij actief is.
 
 ## Wat zit erin?
 

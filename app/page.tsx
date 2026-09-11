@@ -28,7 +28,9 @@ function Logo({ small = false }: { small?: boolean }) { return <span className={
 export default function Home() {
   const [menu, setMenu] = useState(false);
   const [view, setView] = useState('planning');
-  const [aanvraag, setAanvraag] = useState({ naam: '', bedrijf: '', email: '', telefoon: '', bericht: '' });
+  const EMPTY_AANVRAAG = { naam: '', bedrijf: '', email: '', telefoon: '', bericht: '', website: '' };
+  const [aanvraag, setAanvraag] = useState(EMPTY_AANVRAAG);
+  const [status, setStatus] = useState<'idle' | 'sending' | 'sent' | 'error'>('idle');
   const demoUrl = (process.env.NEXT_PUBLIC_DEMO_URL || 'https://demo.petroshift.nl').trim();
   const email = (process.env.NEXT_PUBLIC_CONTACT_EMAIL || 'info@petroshift.nl').trim();
   const bookingUrl = demoUrl && /^https:\/\//i.test(demoUrl) ? demoUrl : undefined;
@@ -37,18 +39,22 @@ export default function Home() {
     value: aanvraag[key],
     onChange: (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => setAanvraag({ ...aanvraag, [key]: e.target.value }),
   });
-  const verstuurAanvraag = (e: FormEvent) => {
+  const verstuurAanvraag = async (e: FormEvent) => {
     e.preventDefault();
-    const subject = `Aanvraag via website${aanvraag.bedrijf ? ' – ' + aanvraag.bedrijf : ''}`;
-    const body = [
-      `Naam: ${aanvraag.naam}`,
-      aanvraag.bedrijf && `Bedrijf: ${aanvraag.bedrijf}`,
-      `E-mail: ${aanvraag.email}`,
-      aanvraag.telefoon && `Telefoon: ${aanvraag.telefoon}`,
-      '',
-      aanvraag.bericht,
-    ].filter(Boolean).join('\n');
-    window.location.href = `mailto:${contactEmail}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/aanvraag', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(aanvraag),
+      });
+      const data = await res.json().catch(() => ({ ok: false }));
+      if (!res.ok || !data.ok) throw new Error(data.error || 'Versturen mislukt');
+      setStatus('sent');
+      setAanvraag(EMPTY_AANVRAAG);
+    } catch {
+      setStatus('error');
+    }
   };
   return <>
     <a className="skip-link" href="#main">Direct naar inhoud</a>
@@ -64,7 +70,7 @@ export default function Home() {
     <section className="founder-strip" aria-label="Over de oprichter"><div className="container founder-strip-inner"><img src="/jurrien-bolland.jpg" alt="Jurrien Bolland, oprichter en eigenaar van PetroShift" width="96" height="96"/><div><span className="founder-role">OPRICHTER & EIGENAAR</span><h3>Jurrien Bolland</h3><p>Rechtstreeks contact met wie PetroShift bouwt — geen callcenter tussen jou en de antwoorden.</p></div></div></section>
     <section className="section integrations" id="integraties"><div className="container integration-grid"><div><div className="eyebrow">05 / PASSEND IN JOUW LANDSCHAP</div><h2>De werkvloer en HR.<br/><span>Beter verbonden.</span></h2><p className="section-intro">Je planning staat niet op zichzelf. We bespreken hoe PetroShift kan aansluiten op je bestaande processen en systemen.</p><div className="security-note"><ShieldCheck size={24}/><div><h3>Security als implementatievoorwaarde</h3><p>Toegang, gegevensverwerking en beheer stemmen we vooraf af met je IT- en privacyteam.</p></div></div></div><div className="integration-card"><div className="connection"><Logo small/><FileCheck2 size={26}/><span className="workday">workday<span/></span></div><div className="status-outline">GEEN LIVE KOPPELING</div><h3>Workday-controle voor HR</h3><p>PetroShift wisselt geen gegevens automatisch uit met Workday. In plaats daarvan is het een controlemoment: HR legt de bezetting en uren uit PetroShift naast Workday en signaleert afwijkingen, zonder technische koppeling.</p><div className="integration-foot"><CircleHelp size={16}/> Handmatige controle, geen automatische synchronisatie</div></div></div></section>
     <section className="section faq" id="faq"><div className="container faq-grid"><div><div className="eyebrow">06 / GOED OM TE WETEN</div><h2>Heldere vragen.<br/><span>Heldere antwoorden.</span></h2><p>Een andere vraag? Neem die mee in het gesprek over jouw operatie.</p><a href={bookingUrl || "#demo"} className="text-link">Laten we kennismaken <ArrowUpRight size={18}/></a></div><div className="faq-list">{faqs.map(([q,a])=><details key={q}><summary>{q}<Plus size={19}/></summary><p>{a}</p></details>)}</div></div></section>
-    <section className="demo-section" id="demo"><div className="container demo-grid"><div><div className="eyebrow">DE VOLGENDE SHIFT BEGINT MET OVERZICHT</div><h2>Klaar voor meer grip<br/>op jouw operatie?</h2><p>Bekijk hoe PetroShift kan aansluiten op jouw ploegen, processen en dagelijkse praktijk.</p><div className="contact-methods"><a href={PHONE_HREF}><Phone size={18}/> {PHONE_DISPLAY}</a><a href={`mailto:${contactEmail}`}><Mail size={18}/> {contactEmail}</a></div><div className="demo-checks"><span><Check size={16}/> Jouw ploegensysteem centraal</span><span><Check size={16}/> Ruimte voor inhoudelijke vragen</span></div>{bookingUrl && <a className="button button-dark" href={bookingUrl} target="_blank" rel="noopener noreferrer" style={{marginTop:24}}>Bekijk de demo <ArrowUpRight size={20}/></a>}</div><form className="aanvraag-form" onSubmit={verstuurAanvraag} aria-label="Aanvraagformulier"><h3>Vraag vrijblijvend informatie aan</h3><p className="form-hint">We nemen zo snel mogelijk contact op. Versturen opent je e-mailprogramma met deze gegevens al ingevuld.</p><div className="field-row"><label>Naam*<input required {...veld('naam')} autoComplete="name"/></label><label>Bedrijf<input {...veld('bedrijf')} autoComplete="organization"/></label></div><div className="field-row"><label>E-mail*<input required type="email" {...veld('email')} autoComplete="email"/></label><label>Telefoonnummer<input type="tel" {...veld('telefoon')} autoComplete="tel" placeholder="06 12 34 56 78"/></label></div><label>Bericht<textarea rows={4} {...veld('bericht')} placeholder="Vertel kort over je ploegen en waar je hulp bij zoekt."/></label><button type="submit" className="button button-dark">Verstuur aanvraag <ArrowUpRight size={18}/></button></form></div></section>
+    <section className="demo-section" id="demo"><div className="container demo-grid"><div><div className="eyebrow">DE VOLGENDE SHIFT BEGINT MET OVERZICHT</div><h2>Klaar voor meer grip<br/>op jouw operatie?</h2><p>Bekijk hoe PetroShift kan aansluiten op jouw ploegen, processen en dagelijkse praktijk.</p><div className="contact-methods"><a href={PHONE_HREF}><Phone size={18}/> {PHONE_DISPLAY}</a><a href={`mailto:${contactEmail}`}><Mail size={18}/> {contactEmail}</a></div><div className="demo-checks"><span><Check size={16}/> Jouw ploegensysteem centraal</span><span><Check size={16}/> Ruimte voor inhoudelijke vragen</span></div>{bookingUrl && <a className="button button-dark" href={bookingUrl} target="_blank" rel="noopener noreferrer" style={{marginTop:24}}>Bekijk de demo <ArrowUpRight size={20}/></a>}</div><form className="aanvraag-form" onSubmit={verstuurAanvraag} aria-label="Aanvraagformulier">{status==='sent'?<><h3>Aanvraag verstuurd</h3><p className="form-hint">Bedankt — we nemen zo snel mogelijk contact op.</p></>:<><h3>Vraag vrijblijvend informatie aan</h3><p className="form-hint">We nemen zo snel mogelijk contact op.</p>{status==='error'&&<p className="form-error">Dat ging niet goed. Bel of mail ons direct: <a href={PHONE_HREF}>{PHONE_DISPLAY}</a> of <a href={`mailto:${contactEmail}`}>{contactEmail}</a>.</p>}<div className="field-row"><label>Naam*<input required {...veld('naam')} autoComplete="name"/></label><label>Bedrijf<input {...veld('bedrijf')} autoComplete="organization"/></label></div><div className="field-row"><label>E-mail*<input required type="email" {...veld('email')} autoComplete="email"/></label><label>Telefoonnummer<input type="tel" {...veld('telefoon')} autoComplete="tel" placeholder="06 12 34 56 78"/></label></div><label>Bericht<textarea rows={4} {...veld('bericht')} placeholder="Vertel kort over je ploegen en waar je hulp bij zoekt."/></label><input className="hp-field" tabIndex={-1} aria-hidden="true" autoComplete="off" {...veld('website')}/><button type="submit" className="button button-dark" disabled={status==='sending'}>{status==='sending'?'Bezig met versturen…':<>Verstuur aanvraag <ArrowUpRight size={18}/></>}</button></>}</form></div></section>
     </main><footer><div className="container footer-main"><a href="#" aria-label="PetroShift bovenaan"><Logo/></a><p>Built for the people<br/>who keep operations running.</p><a href="#platform">Platform</a><a href="#integraties">Integraties & security</a><a href={bookingUrl || "#demo"}>Demo</a><a href="https://app.petroshift.nl">Open de app</a><a href={`mailto:${contactEmail}`}>{contactEmail}</a><a className="footer-phone" href={PHONE_HREF}>{PHONE_DISPLAY}</a></div><div className="container footer-bottom"><span>© {new Date().getFullYear()} PetroShift</span><span>Roosterscreenshot uit de app; overige voorbeelden zijn illustratief.</span><span>CONTINUITY, PLANNED.</span></div></footer>
   </>;
 }
