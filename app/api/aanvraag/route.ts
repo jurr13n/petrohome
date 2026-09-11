@@ -2,6 +2,23 @@ import { NextResponse } from 'next/server';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
+const COPY = {
+  nl: {
+    validation: 'Naam en een geldig e-mailadres zijn verplicht',
+    notConfigured: 'E-mail is nog niet geconfigureerd',
+    sendFailed: 'Versturen is mislukt',
+    subject: (bedrijf: string) => `Aanvraag via website${bedrijf ? ' – ' + bedrijf : ''}`,
+    labels: { naam: 'Naam', bedrijf: 'Bedrijf', email: 'E-mail', telefoon: 'Telefoon' },
+  },
+  en: {
+    validation: 'Name and a valid email address are required',
+    notConfigured: 'Email is not configured yet',
+    sendFailed: 'Sending failed',
+    subject: (bedrijf: string) => `Website inquiry${bedrijf ? ' – ' + bedrijf : ''}`,
+    labels: { naam: 'Name', bedrijf: 'Company', email: 'Email', telefoon: 'Phone' },
+  },
+} as const;
+
 function clean(v: unknown, max: number): string {
   return typeof v === 'string' ? v.trim().slice(0, max) : '';
 }
@@ -11,8 +28,11 @@ export async function POST(req: Request) {
   try {
     body = await req.json();
   } catch {
-    return NextResponse.json({ ok: false, error: 'Ongeldig verzoek' }, { status: 400 });
+    return NextResponse.json({ ok: false, error: 'Ongeldig verzoek / Invalid request' }, { status: 400 });
   }
+
+  const locale = body.locale === 'en' ? 'en' : 'nl';
+  const t = COPY[locale];
 
   // Honeypot: onzichtbaar voor mensen (aria-hidden, off-screen), bots vullen het vaak toch in.
   if (clean(body.website, 200)) {
@@ -26,23 +46,23 @@ export async function POST(req: Request) {
   const bericht = clean(body.bericht, 2000);
 
   if (!naam || !EMAIL_RE.test(email)) {
-    return NextResponse.json({ ok: false, error: 'Naam en een geldig e-mailadres zijn verplicht' }, { status: 400 });
+    return NextResponse.json({ ok: false, error: t.validation }, { status: 400 });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
     console.error('RESEND_API_KEY ontbreekt — aanvraag kon niet verstuurd worden');
-    return NextResponse.json({ ok: false, error: 'E-mail is nog niet geconfigureerd' }, { status: 500 });
+    return NextResponse.json({ ok: false, error: t.notConfigured }, { status: 500 });
   }
 
   const to = process.env.CONTACT_EMAIL || 'info@petroshift.nl';
   const from = process.env.RESEND_FROM || 'PetroShift <onboarding@resend.dev>';
-  const subject = `Aanvraag via website${bedrijf ? ' – ' + bedrijf : ''}`;
+  const subject = t.subject(bedrijf);
   const text = [
-    `Naam: ${naam}`,
-    bedrijf && `Bedrijf: ${bedrijf}`,
-    `E-mail: ${email}`,
-    telefoon && `Telefoon: ${telefoon}`,
+    `${t.labels.naam}: ${naam}`,
+    bedrijf && `${t.labels.bedrijf}: ${bedrijf}`,
+    `${t.labels.email}: ${email}`,
+    telefoon && `${t.labels.telefoon}: ${telefoon}`,
     '',
     bericht,
   ].filter(Boolean).join('\n');
@@ -55,11 +75,11 @@ export async function POST(req: Request) {
     });
     if (!res.ok) {
       console.error('Resend-fout', res.status, await res.text().catch(() => ''));
-      return NextResponse.json({ ok: false, error: 'Versturen is mislukt' }, { status: 502 });
+      return NextResponse.json({ ok: false, error: t.sendFailed }, { status: 502 });
     }
     return NextResponse.json({ ok: true });
   } catch (err) {
     console.error('Resend-fout', err);
-    return NextResponse.json({ ok: false, error: 'Versturen is mislukt' }, { status: 502 });
+    return NextResponse.json({ ok: false, error: t.sendFailed }, { status: 502 });
   }
 }
