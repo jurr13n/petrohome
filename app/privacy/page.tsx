@@ -41,8 +41,8 @@ export default function Privacy() {
       </ul>
       <p>Neem hiervoor contact op via <a href="mailto:info@petroshift.nl">info@petroshift.nl</a>. Je hebt ook het recht om een klacht in te dienen bij de <a href="https://www.autoriteitpersoonsgegevens.nl" target="_blank" rel="noopener noreferrer">Autoriteit Persoonsgegevens</a>.</p>
 
-      <h2>Cookies en tracking</h2>
-      <p>Deze website gebruikt geen cookies, analytics of andere trackingtools.</p>
+      <h2>Cookies en bezoekersstatistieken</h2>
+      <p>Deze website plaatst geen cookies en volgt je niet individueel. We gebruiken Vercel Web Analytics om alleen geanonimiseerde, geaggregeerde bezoekersaantallen te zien (bijvoorbeeld hoeveel mensen een pagina bezoeken) — zonder cookies, zonder IP-adressen op te slaan en zonder je op andere websites te volgen.</p>
 
       <h2>Wijzigingen</h2>
       <p>We kunnen deze verklaring aanpassen als onze werkwijze verandert. De datum bovenaan deze pagina geeft aan wanneer dat voor het laatst is gebeurd.</p>

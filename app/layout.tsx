@@ -14,5 +14,5 @@ export const metadata: Metadata = {
   },
 };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="nl"><body>{children}</body></html>;
+  return <html lang="nl"><body>{children}<script defer src="/_vercel/insights/script.js" /></body></html>;
 }
