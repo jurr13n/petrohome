@@ -4,7 +4,6 @@ export const metadata: Metadata = {
   metadataBase: new URL('https://www.petroshift.nl'),
   title: 'PetroShift | Grip op elke ploegendienst',
   description: 'Shift planning, verlof, overwerk en kwalificaties in één overzicht. PetroShift brengt rust in de planning van industriële teams.',
-  icons: { icon: '/petroshift-logo.png' },
   alternates: { languages: { nl: '/', en: '/en' } },
   openGraph: {
     title: 'PetroShift | Grip op elke ploegendienst',
