@@ -5,7 +5,7 @@ export const metadata: Metadata = {
   description: 'Hoe PetroShift omgaat met gegevens uit het aanvraagformulier.',
 };
 
-function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="1448" height="1086" /></span>; }
+function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="440" height="378" /></span>; }
 
 export default function Privacy() {
   return <>

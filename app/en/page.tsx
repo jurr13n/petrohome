@@ -26,7 +26,7 @@ const faqs = [
   ['How do we get started, and what does PetroShift cost?', 'We start with a conversation about your teams, processes and required functionality. Based on that, scope, any integrations, implementation and price can be determined. This page does not offer fixed rates.'],
 ];
 
-function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="1448" height="1086" /></span>; }
+function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="440" height="378" /></span>; }
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
