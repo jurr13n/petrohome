@@ -5,12 +5,12 @@ export const metadata: Metadata = {
   description: 'Hoe PetroShift omgaat met gegevens uit het aanvraagformulier.',
 };
 
-function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="440" height="378" /></span>; }
+function HeaderLogo() { return <img src="/petroshift-logo-header.png" alt="PetroShift" className="header-logo" width="532" height="200" />; }
 
 export default function Privacy() {
   return <>
     <a className="skip-link" href="#main">Direct naar inhoud</a>
-    <header className="header"><div className="nav-wrap"><a href="/" aria-label="PetroShift homepage"><Logo/></a><nav className="legal-nav" aria-label="Hoofdnavigatie"><a href="/">← Terug naar de website</a><a href="/en/privacy" className="lang-switch">EN</a></nav></div></header>
+    <header className="header"><div className="nav-wrap"><a href="/" aria-label="PetroShift homepage"><HeaderLogo/></a><nav className="legal-nav" aria-label="Hoofdnavigatie"><a href="/">← Terug naar de website</a><a href="/en/privacy" className="lang-switch">EN</a></nav></div></header>
     <main id="main"><section className="legal"><div className="container">
       <h1>Privacyverklaring</h1>
       <p className="updated">Laatst gewijzigd: 12 september 2026</p>
