@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import './globals.css';
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.petroshift.nl'),
@@ -13,6 +13,7 @@ export const metadata: Metadata = {
     images: [{ url: '/petroshift-rooster.png', width: 1655, height: 1275, alt: 'PetroShift-rooster: maandmatrix met medewerkers, diensten, verlof en bezetting.' }],
   },
 };
+export const viewport: Viewport = { width: 'device-width', initialScale: 1, viewportFit: 'cover', themeColor: '#f7f9fc' };
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return <html lang="nl"><body>{children}<script defer src="/_vercel/insights/script.js" /><script defer src="/_vercel/speed-insights/script.js" /></body></html>;
 }
