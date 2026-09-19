@@ -112,3 +112,23 @@ body{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)
 .form-success path{stroke-dasharray:40;stroke-dashoffset:40;animation:draw 320ms var(--ease-out) 380ms forwards}
 @keyframes draw{to{stroke-dashoffset:0}}
 @media(prefers-reduced-motion:reduce){.hotspot.hint .hotspot-dot::after{animation:none;opacity:0}.form-success circle,.form-success path{stroke-dashoffset:0}}
+
+/* ---- Scroll-gekoppelde beweging ---- */
+@supports (animation-timeline:view()){
+  /* Roosterscreenshot landt: van licht gekanteld en kleiner naar recht en op volle grootte */
+  /* overflow:hidden op .hero maakte het de scroll-container voor view(); clip behoudt de uitsnede zonder */
+  .hero{overflow:clip}
+  @keyframes land{from{transform:perspective(1400px) rotateX(5deg) scale(.95)}to{transform:none}}
+  .actual-app-preview{transform-origin:50% 0;animation:land linear both;animation-timeline:view();animation-range:entry 10% cover 30%}
+
+  /* Voortgangslijn onder de header */
+  @keyframes progress{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  .header::after{content:"";position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--orange);transform-origin:0 50%;animation:progress linear both;animation-timeline:scroll(root)}
+
+  /* Feature-kaarten: per kolom een tikje later */
+  @media(min-width:851px){
+    .feature:nth-child(3n+2){animation-range:entry 10% entry 50%}
+    .feature:nth-child(3n){animation-range:entry 20% entry 60%}
+  }
+}
+@media(prefers-reduced-motion:reduce){.header::after{animation:none;transform:scaleX(0)}}
