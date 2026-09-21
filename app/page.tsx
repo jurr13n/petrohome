@@ -77,7 +77,7 @@ const news = [
 ];
 
 function Logo({ small = false }: { small?: boolean }) { return <span className={`logo supplied-logo ${small ? 'small' : ''}`}><img src="/petroshift-logo.png" alt="PetroShift" width="440" height="378" /></span>; }
-function HeaderLogo() { return <img src="/petroshift-logo-header.png" alt="PetroShift" className="header-logo" width="532" height="200" />; }
+function HeaderLogo() { return <img src="/petroshift-logo-header.png" alt="PetroShift" className="header-logo" width="532" height="132" />; }
 
 export default function Home() {
   const [menu, setMenu] = useState(false);
