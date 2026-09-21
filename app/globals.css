@@ -315,3 +315,14 @@ body{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)
 .ib-msgs .chat-msg.owner .chat-bubble{color:#fff;background:linear-gradient(180deg,#1d5a80,#0f3752);border:0;border-radius:14px 14px 4px 14px}
 .ib-msgs .chat-msg.visitor{align-self:flex-start;align-items:flex-start}
 .ib-msgs .chat-msg.visitor .chat-bubble{color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:14px 14px 14px 4px}
+
+/* Chatknop springt af en toe: gravity-easing (omhoog uitlopend, omlaag versnellend), los van de hover-transform */
+@keyframes chat-hop{
+  0%{translate:0 0;animation-timing-function:cubic-bezier(.23,1,.32,1)}
+  28%{translate:0 -16px;animation-timing-function:cubic-bezier(.55,0,1,.45)}
+  52%{translate:0 0;animation-timing-function:cubic-bezier(.23,1,.32,1)}
+  68%{translate:0 -7px;animation-timing-function:cubic-bezier(.55,0,1,.45)}
+  84%,100%{translate:0 0}
+}
+.chat-fab.hop{animation:chat-hop 800ms both}
+@media(prefers-reduced-motion:reduce){.chat-fab.hop{animation:none}}

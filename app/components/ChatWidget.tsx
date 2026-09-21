@@ -55,6 +55,8 @@ export default function ChatWidget() {
   const [busy, setBusy] = useState(false);
   const [form, setForm] = useState({ name: '', email: '', message: '', website: '' });
   const [draft, setDraft] = useState('');
+  const [hop, setHop] = useState(false);
+  const engaged = useRef(false);
 
   const panel = useRef<HTMLDivElement>(null);
   const list = useRef<HTMLDivElement>(null);
@@ -117,6 +119,7 @@ export default function ChatWidget() {
 
   useEffect(() => {
     if (open) {
+      engaged.current = true;
       setUnseen(false);
       idleSince.current = Date.now();
       if (session) { seenRef.current = lastId.current; save({ ...session, seen: lastId.current }); poll(); }
@@ -126,6 +129,23 @@ export default function ChatWidget() {
 
   useEffect(() => { list.current?.scrollTo({ top: list.current.scrollHeight }); }, [msgs.length, open]);
   useEffect(() => { if (session && msgs.length && open) { seenRef.current = lastId.current; save({ ...session, seen: lastId.current }); } }, [msgs.length]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  // Af en toe een sprongetje om de aandacht te trekken: eerst na 8 s, daarna elke 25 s, hooguit 5 keer,
+  // en nooit meer zodra de bezoeker de chat heeft geopend.
+  useEffect(() => {
+    if (!enabled) return;
+    let count = 0;
+    let timer: ReturnType<typeof setTimeout>;
+    const schedule = (ms: number) => {
+      timer = setTimeout(() => {
+        if (engaged.current || count >= 5) return;
+        if (document.visibilityState === 'visible' && !openRef.current) { count += 1; setHop(true); }
+        schedule(25_000);
+      }, ms);
+    };
+    schedule(8_000);
+    return () => clearTimeout(timer);
+  }, [enabled]);
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
     if (e.key === 'Escape') { setOpen(false); return; }
@@ -223,7 +243,7 @@ export default function ChatWidget() {
           )}
         </div>
       )}
-      <button type="button" className={`chat-fab${open ? ' is-open' : ''}`} onClick={() => setOpen(!open)} aria-label={t.fabLabel} aria-expanded={open}>
+      <button type="button" className={`chat-fab${open ? ' is-open' : ''}${hop ? ' hop' : ''}`} onAnimationEnd={() => setHop(false)} onClick={() => setOpen(!open)} aria-label={t.fabLabel} aria-expanded={open}>
         <MessageCircle size={20} /><span>{t.fab}</span>{unseen && !open && <i className="chat-dot" aria-hidden="true" />}
       </button>
     </>
