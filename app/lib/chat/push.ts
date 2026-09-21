@@ -42,3 +42,30 @@ async function send(store: Store, n: { title: string; body: string; url: string;
   );
   return sent;
 }
+
+/** Voor de testknop in de inbox: laat per stap zien wat er misgaat (alleen voor de ingelogde eigenaar). */
+export async function diagnose(store: Store, n: { title: string; body: string; url: string; tag: string }) {
+  const info = { configured: pushConfigured(), subs: 0, sent: 0, errors: [] as string[] };
+  try {
+    if (!init()) return info;
+  } catch (err) {
+    info.errors.push(`VAPID: ${(err as Error).message}`);
+    return info;
+  }
+  const subs = await store.listPush();
+  info.subs = subs.length;
+  const payload = JSON.stringify(n);
+  await Promise.allSettled(
+    subs.map(async (s) => {
+      try {
+        await webpush.sendNotification(s, payload, { TTL: 300 });
+        info.sent += 1;
+      } catch (err) {
+        const e = err as { statusCode?: number; body?: string; message?: string };
+        info.errors.push(`${new URL(s.endpoint).host}: ${e.statusCode ?? ''} ${String(e.body || e.message || '').slice(0, 140)}`.trim());
+        if (e.statusCode === 404 || e.statusCode === 410) await store.removePush(s.endpoint);
+      }
+    }),
+  );
+  return info;
+}

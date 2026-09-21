@@ -137,7 +137,9 @@ export default function InboxApp() {
   };
   const testNotification = async () => {
     const { data } = await api('/api/inbox/push/test');
-    setNotifMsg(data.sent ? 'Testmelding verstuurd.' : 'Geen apparaat aangemeld of de sleutels ontbreken.');
+    if (data.sent) { setNotifMsg(`Testmelding verstuurd naar ${data.sent} van ${data.subs} apparaat/apparaten.`); return; }
+    const why = !data.configured ? 'de VAPID-sleutels ontbreken op de server' : data.subs === 0 ? 'geen apparaat aangemeld op de server' : `verzenden mislukte: ${(data.errors || []).join('; ')}`;
+    setNotifMsg(`Geen testmelding: ${why}.`);
   };
 
   const login = async (e: FormEvent) => {
