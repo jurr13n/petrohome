@@ -326,3 +326,24 @@ body{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)
 }
 .chat-fab.hop{animation:chat-hop 800ms both}
 @media(prefers-reduced-motion:reduce){.chat-fab.hop{animation:none}}
+
+/* ---- Meer tekstbeweging ---- */
+@keyframes wipe-in{from{clip-path:inset(-12% 100% -12% 0);opacity:.3;transform:translateX(-8px)}to{clip-path:inset(-12% 0 -12% 0);opacity:1;transform:none}}
+@keyframes dash-grow{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+/* Tekstlinks: onderlijn groeit bij hover, alleen met muis */
+.text-link{background:linear-gradient(currentColor,currentColor) 0 100%/0 1.5px no-repeat;padding-bottom:2px;transition:background-size 240ms var(--ease-out),color .2s}
+@media(hover:hover) and (pointer:fine){.text-link:hover{background-size:100% 1.5px}}
+/* Hero: het streepje voor de eyebrow groeit in */
+.hero .tiny-line{display:inline-block;transform-origin:0 50%;animation:dash-grow 600ms var(--ease-out) 150ms both}
+@supports (animation-timeline:view()){
+  /* Tweede regel van elke kop wordt van links naar rechts onthuld */
+  .section h2 span{animation:wipe-in linear both;animation-timeline:view();animation-range:entry 8% entry 60%}
+  .section .eyebrow .tiny-line,.section .eyebrow .orange-square{display:inline-block;transform-origin:0 50%;animation:dash-grow linear both;animation-timeline:view();animation-range:entry 0% entry 30%}
+  /* Losse teksten, lijstjes en notities schuiven één voor één in */
+  .problem-right>*,.showcase-copy>p,.view-options>*,.security-note,.demo-checks>span,.contact-methods>a,.faq-grid>div>.text-link,.notif-note,.sector-strip .container>span,.sector-strip .container>div>span,.hero-bottom>*{animation:text-in linear both;animation-timeline:view();animation-range:entry 0% entry 45%}
+  .sector-strip .container>div>span:nth-child(2),.view-options>*:nth-child(2),.demo-checks>span:nth-child(2),.hero-bottom>*:nth-child(2){animation-range:entry 8% entry 53%}
+  .sector-strip .container>div>span:nth-child(3),.view-options>*:nth-child(3),.hero-bottom>*:nth-child(3){animation-range:entry 16% entry 61%}
+  .sector-strip .container>div>span:nth-child(4),.view-options>*:nth-child(4),.hero-bottom>*:nth-child(4){animation-range:entry 24% entry 69%}
+  .feature h3,.feature p,.integration-card h3,.integration-card p{animation:text-in linear both;animation-timeline:view();animation-range:entry 10% entry 55%}
+  .feature p,.integration-card p{animation-range:entry 20% entry 65%}
+}

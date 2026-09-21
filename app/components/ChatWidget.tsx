@@ -130,7 +130,7 @@ export default function ChatWidget() {
   useEffect(() => { list.current?.scrollTo({ top: list.current.scrollHeight }); }, [msgs.length, open]);
   useEffect(() => { if (session && msgs.length && open) { seenRef.current = lastId.current; save({ ...session, seen: lastId.current }); } }, [msgs.length]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Af en toe een sprongetje om de aandacht te trekken: eerst na 8 s, daarna elke 25 s, hooguit 5 keer,
+  // Regelmatig een sprongetje om de aandacht te trekken: eerst na 5 s, daarna elke 12 s, hooguit 10 keer,
   // en nooit meer zodra de bezoeker de chat heeft geopend.
   useEffect(() => {
     if (!enabled) return;
@@ -138,12 +138,12 @@ export default function ChatWidget() {
     let timer: ReturnType<typeof setTimeout>;
     const schedule = (ms: number) => {
       timer = setTimeout(() => {
-        if (engaged.current || count >= 5) return;
+        if (engaged.current || count >= 10) return;
         if (document.visibilityState === 'visible' && !openRef.current) { count += 1; setHop(true); }
-        schedule(25_000);
+        schedule(12_000);
       }, ms);
     };
-    schedule(8_000);
+    schedule(5_000);
     return () => clearTimeout(timer);
   }, [enabled]);
 
