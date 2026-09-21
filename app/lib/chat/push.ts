@@ -4,14 +4,16 @@ import type { Store } from './store';
 let ready = false;
 function init(): boolean {
   if (ready) return true;
-  const pub = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const pub = publicKey();
   const priv = process.env.VAPID_PRIVATE_KEY;
   if (!pub || !priv) return false;
   webpush.setVapidDetails(process.env.VAPID_SUBJECT || 'mailto:info@petroshift.nl', pub, priv);
   ready = true;
   return true;
 }
-export const pushConfigured = () => !!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY && !!process.env.VAPID_PRIVATE_KEY;
+// Dynamische sleutel-lookup, zodat Next de waarde niet bij het bouwen vastzet.
+const publicKey = () => process.env['VAPID_PUBLIC_KEY'] || process.env['NEXT_PUBLIC_VAPID_PUBLIC_KEY'] || '';
+export const pushConfigured = () => !!publicKey() && !!process.env.VAPID_PRIVATE_KEY;
 
 /** Stuurt een melding naar alle apparaten van de eigenaar. Fouten blokkeren het bericht nooit. */
 export async function notifyOwner(store: Store, n: { title: string; body: string; url: string; tag: string }): Promise<number> {
@@ -45,7 +47,7 @@ async function send(store: Store, n: { title: string; body: string; url: string;
 
 /** Voor de testknop in de inbox: laat per stap zien wat er misgaat (alleen voor de ingelogde eigenaar). */
 export async function diagnose(store: Store, n: { title: string; body: string; url: string; tag: string }) {
-  const info = { configured: pushConfigured(), subs: 0, sent: 0, errors: [] as string[] };
+  const info = { configured: pushConfigured(), has: { public: !!publicKey(), private: !!process.env.VAPID_PRIVATE_KEY, subject: !!process.env.VAPID_SUBJECT, session: !!process.env.CHAT_SESSION_SECRET }, subs: 0, sent: 0, errors: [] as string[] };
   try {
     if (!init()) return info;
   } catch (err) {

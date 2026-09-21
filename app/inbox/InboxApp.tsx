@@ -138,7 +138,7 @@ export default function InboxApp() {
   const testNotification = async () => {
     const { data } = await api('/api/inbox/push/test');
     if (data.sent) { setNotifMsg(`Testmelding verstuurd naar ${data.sent} van ${data.subs} apparaat/apparaten.`); return; }
-    const why = !data.configured ? 'de VAPID-sleutels ontbreken op de server' : data.subs === 0 ? 'geen apparaat aangemeld op de server' : `verzenden mislukte: ${(data.errors || []).join('; ')}`;
+    const why = !data.configured ? `de VAPID-sleutels ontbreken op de server (publiek: ${data.has?.public ? 'ja' : 'nee'}, privé: ${data.has?.private ? 'ja' : 'nee'})` : data.subs === 0 ? 'geen apparaat aangemeld op de server' : `verzenden mislukte: ${(data.errors || []).join('; ')}`;
     setNotifMsg(`Geen testmelding: ${why}.`);
   };
 
