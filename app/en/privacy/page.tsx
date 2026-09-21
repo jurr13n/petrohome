@@ -13,25 +13,25 @@ export default function Privacy() {
     <header className="header"><div className="nav-wrap"><a href="/en" aria-label="PetroShift homepage"><HeaderLogo/></a><nav className="legal-nav" aria-label="Main navigation"><a href="/en">← Back to the website</a><a href="/privacy" className="lang-switch">NL</a></nav></div></header>
     <main id="main"><section className="legal"><div className="container">
       <h1>Privacy Policy</h1>
-      <p className="updated">Last updated: September 12, 2026</p>
+      <p className="updated">Last updated: September 21, 2026</p>
 
       <h2>Who we are</h2>
       <p>This privacy policy covers petroshift.nl. Questions about this policy or your data can be sent to <a href="mailto:info@petroshift.nl">info@petroshift.nl</a> or <a href="tel:+31617109586">+31 6 17 10 95 86</a>.</p>
 
       <h2>What data we collect</h2>
-      <p>Only what you enter yourself in the contact form on this site: name, optionally a company name, email address, optionally a phone number, and your message. There are no user accounts on this website, and we don’t collect any other data.</p>
+      <p>Only what you enter yourself: in the contact form your name, optionally a company name, email address, optionally a phone number and your message, and in the chat your name, email address and the messages you send. There are no visitor accounts and we don’t collect any other data.</p>
 
       <h2>What we use it for</h2>
-      <p>Solely to respond to your request — not for marketing, newsletters or any other purpose.</p>
+      <p>Solely to respond to your request or chat message — not for marketing, newsletters or any other purpose.</p>
 
       <h2>How we process it</h2>
-      <p>The form sends your data directly as an email to info@petroshift.nl, via Resend’s email infrastructure. There is no database: your data isn’t stored separately anywhere on this website, it’s simply received as an email like any other email we get.</p>
+      <p>The contact form sends your data directly as an email to info@petroshift.nl, via Resend’s email infrastructure. The chat stores your name, email address and messages in a database at Upstash, so we can reply and you can pick the conversation back up. On your own device the chat keeps a conversation ID and a secret key in your browser’s local storage, only to find your conversation again. When a new chat message arrives, PetroShift receives a push notification on its own phone; it travels encrypted through the push service of the recipient’s browser.</p>
 
       <h2>Sharing with third parties</h2>
-      <p>Only Resend processes your data, purely as a technical party to deliver the email. We don’t sell or share your data with anyone else.</p>
+      <p>Resend (email), Upstash (storage of chat conversations) and Vercel (hosting of this website) process your data, purely as technical parties. We don’t sell or share your data with anyone else.</p>
 
       <h2>Retention</h2>
-      <p>Your request stays in our regular email inbox for as long as needed to handle your request and any follow-up communication, following our normal email management.</p>
+      <p>Your request stays in our regular email inbox for as long as needed to handle your request and any follow-up communication, following our normal email management. Chat conversations are automatically deleted no later than 90 days after the last message. If you want your chat deleted sooner, email info@petroshift.nl.</p>
 
       <h2>Your rights</h2>
       <ul>

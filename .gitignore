@@ -5,3 +5,4 @@ node_modules/
 .logo-work/
 AGENTS.md
 CLAUDE.md
+.env*.local
