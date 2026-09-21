@@ -53,3 +53,15 @@ export function needStore(): { store: Store } | { res: NextResponse } {
   const store = getStore();
   return store ? { store } : { res: json({ ok: false, error: 'unavailable' }, 503) };
 }
+
+/** Vangt onverwachte fouten op: logt ze en geeft een nette JSON-fout in plaats van een lege 500. */
+export async function safe(fn: () => Promise<Response>): Promise<Response> {
+  try {
+    return await fn();
+  } catch (err) {
+    console.error('chat-fout', (err as Error)?.message);
+    // Tijdelijk aan te zetten met CHAT_DEBUG=1 om een fout te kunnen opsporen.
+    const detail = process.env.CHAT_DEBUG === '1' ? String((err as Error)?.message).slice(0, 300) : undefined;
+    return json({ ok: false, error: 'server', detail }, 500);
+  }
+}

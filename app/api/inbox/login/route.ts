@@ -1,11 +1,11 @@
 import { NextResponse } from 'next/server';
 import { checkPassword, ownerConfigured, sessionCookie } from '../../../lib/chat/auth';
-import { clean, clientKey, json, needStore, readJson, sameOrigin } from '../../../lib/chat/http';
+import { clean, clientKey, json, needStore, readJson, sameOrigin, safe } from '../../../lib/chat/http';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   if (!sameOrigin(req)) return json({ ok: false, error: 'forbidden' }, 403);
   if (!ownerConfigured()) return json({ ok: false, error: 'unavailable' }, 503);
   const s = needStore();
@@ -21,3 +21,5 @@ export async function POST(req: Request) {
   res.headers.append('Set-Cookie', sessionCookie());
   return res;
 }
+
+export const POST = (req: Request) => safe(() => handlePOST(req));

@@ -1,11 +1,11 @@
-import { clean, clientKey, EMAIL_RE, json, needStore, readJson, sameOrigin, sha256 } from '../../../lib/chat/http';
+import { clean, clientKey, EMAIL_RE, json, needStore, readJson, sameOrigin, sha256, safe } from '../../../lib/chat/http';
 import { newId, newToken } from '../../../lib/chat/auth';
 import { notifyOwner } from '../../../lib/chat/push';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   if (!sameOrigin(req)) return json({ ok: false, error: 'forbidden' }, 403);
   const s = needStore();
   if ('res' in s) return s.res;
@@ -33,3 +33,5 @@ export async function POST(req: Request) {
   await notifyOwner(store, { title: `Nieuw gesprek: ${name}`, body: text, url: `/inbox?c=${conv.id}`, tag: conv.id });
   return json({ ok: true, id: conv.id, token, messages: [msg] });
 }
+
+export const POST = (req: Request) => safe(() => handlePOST(req));

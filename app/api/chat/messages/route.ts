@@ -1,11 +1,11 @@
-import { clean, json, needStore } from '../../../lib/chat/http';
+import { clean, json, needStore, safe } from '../../../lib/chat/http';
 import { visitorConv } from '../../../lib/chat/auth';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
 // De token gaat in een header, niet in de URL, zodat hij niet in logs terechtkomt.
-export async function GET(req: Request) {
+async function handleGET(req: Request) {
   const s = needStore();
   if ('res' in s) return s.res;
   const { store } = s;
@@ -19,3 +19,5 @@ export async function GET(req: Request) {
   const messages = await store.listMsgs(conv.id, after);
   return json({ ok: true, messages, status: conv.status });
 }
+
+export const GET = (req: Request) => safe(() => handleGET(req));

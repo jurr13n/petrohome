@@ -1,5 +1,5 @@
 import { isOwner } from '../../../lib/chat/auth';
-import { clean, json, needStore, readJson, sameOrigin } from '../../../lib/chat/http';
+import { clean, json, needStore, readJson, sameOrigin, safe } from '../../../lib/chat/http';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -13,7 +13,7 @@ function parseSub(body: Record<string, unknown> | null) {
   return endpoint.startsWith('https://') && p256dh && auth ? { endpoint, keys: { p256dh, auth } } : null;
 }
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   if (!sameOrigin(req)) return json({ ok: false, error: 'forbidden' }, 403);
   if (!isOwner(req)) return json({ ok: false, error: 'unauthorized' }, 401);
   const s = needStore();
@@ -24,7 +24,7 @@ export async function POST(req: Request) {
   return json({ ok: true });
 }
 
-export async function DELETE(req: Request) {
+async function handleDELETE(req: Request) {
   if (!sameOrigin(req)) return json({ ok: false, error: 'forbidden' }, 403);
   if (!isOwner(req)) return json({ ok: false, error: 'unauthorized' }, 401);
   const s = needStore();
@@ -34,3 +34,6 @@ export async function DELETE(req: Request) {
   if (endpoint) await s.store.removePush(endpoint);
   return json({ ok: true });
 }
+
+export const POST = (req: Request) => safe(() => handlePOST(req));
+export const DELETE = (req: Request) => safe(() => handleDELETE(req));

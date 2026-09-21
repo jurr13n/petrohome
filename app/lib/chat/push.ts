@@ -15,6 +15,15 @@ export const pushConfigured = () => !!process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY &
 
 /** Stuurt een melding naar alle apparaten van de eigenaar. Fouten blokkeren het bericht nooit. */
 export async function notifyOwner(store: Store, n: { title: string; body: string; url: string; tag: string }): Promise<number> {
+  try {
+    return await send(store, n);
+  } catch (err) {
+    console.error('push-fout', (err as Error)?.message);
+    return 0;
+  }
+}
+
+async function send(store: Store, n: { title: string; body: string; url: string; tag: string }): Promise<number> {
   if (!init()) return 0;
   const subs = await store.listPush();
   const payload = JSON.stringify({ ...n, body: n.body.slice(0, 140) });

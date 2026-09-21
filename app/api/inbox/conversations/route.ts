@@ -1,11 +1,11 @@
 import { isOwner } from '../../../lib/chat/auth';
-import { json, needStore } from '../../../lib/chat/http';
+import { json, needStore, safe } from '../../../lib/chat/http';
 import { pushConfigured } from '../../../lib/chat/push';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function GET(req: Request) {
+async function handleGET(req: Request) {
   if (!isOwner(req)) return json({ ok: false, error: 'unauthorized' }, 401);
   const s = needStore();
   if ('res' in s) return s.res;
@@ -17,3 +17,5 @@ export async function GET(req: Request) {
     conversations: convs.map(({ tokenHash: _t, ...c }) => c),
   });
 }
+
+export const GET = (req: Request) => safe(() => handleGET(req));

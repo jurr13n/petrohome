@@ -1,11 +1,11 @@
-import { clean, clientKey, json, needStore, readJson, sameOrigin } from '../../../lib/chat/http';
+import { clean, clientKey, json, needStore, readJson, sameOrigin, safe } from '../../../lib/chat/http';
 import { visitorConv } from '../../../lib/chat/auth';
 import { notifyOwner } from '../../../lib/chat/push';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-export async function POST(req: Request) {
+async function handlePOST(req: Request) {
   if (!sameOrigin(req)) return json({ ok: false, error: 'forbidden' }, 403);
   const s = needStore();
   if ('res' in s) return s.res;
@@ -29,3 +29,5 @@ export async function POST(req: Request) {
   await notifyOwner(store, { title: `Bericht van ${conv.name}`, body: text, url: `/inbox?c=${conv.id}`, tag: conv.id });
   return json({ ok: true, message: added.msg });
 }
+
+export const POST = (req: Request) => safe(() => handlePOST(req));
