@@ -159,3 +159,16 @@ body{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)
 @supports (animation-timeline:view()){.news-grid dl>div{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}
 
 .new-tag{display:inline-block;margin-left:8px;padding:1px 7px;border-radius:999px;background:var(--orange);color:#132c43;font-family:var(--font-body);font-size:11px;font-style:normal;font-weight:700;letter-spacing:.3px;vertical-align:2px}
+
+/* ---- Functies in beeld ---- */
+.spotlight{margin-top:64px;padding-top:40px;border-top:1px solid var(--line)}
+.spot{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.4fr);gap:56px;align-items:center;margin-top:44px}
+.spot:nth-of-type(even){grid-template-columns:minmax(0,1.4fr) minmax(0,.8fr)}
+.spot:nth-of-type(even) .spot-text{order:2}
+.spot-text h4{font-family:var(--font-heading);font-size:clamp(1.3rem,2vw,1.7rem);letter-spacing:-.8px;font-weight:600;margin:0 0 12px}
+.spot-text p{font-size:15.5px;line-height:1.75}
+.spot-shot{display:block;border:1px solid var(--line);border-radius:10px;overflow:hidden;background:#fff;box-shadow:0 22px 50px #0a233820;transition:transform 200ms var(--ease-out)}
+.spot-shot img{display:block;width:100%;height:auto}
+.spot-shot:active{transform:scale(.99)}
+@media(max-width:850px){.spotlight{margin-top:44px}.spot,.spot:nth-of-type(even){grid-template-columns:1fr;gap:20px}.spot:nth-of-type(even) .spot-text{order:0}}
+@supports (animation-timeline:view()){.spot{animation:reveal linear both;animation-timeline:view();animation-range:entry 0% entry 40%}}

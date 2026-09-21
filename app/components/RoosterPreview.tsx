@@ -7,10 +7,10 @@ type Locale = 'nl' | 'en';
 
 // Posities in procenten van de screenshot (1655 × 1275).
 const SPOTS = [
-  { x: 46, y: 46.5, nl: ['Verlof met bezetting in beeld', 'Ruud Brouwer heeft verlof. In de regel onderaan zie je meteen dat de bezetting op die dagen onder het minimum zakt.'], en: ['Leave with staffing in view', 'Ruud Brouwer is on leave. The row at the bottom shows right away that staffing drops below the minimum on those days.'] },
-  { x: 35.5, y: 86.5, nl: ['Tekorten in één oogopslag', 'Rood is te weinig mensen, groen is voldoende. Zo zie je direct welke shifts om actie vragen.'], en: ['Shortages at a glance', 'Red means too few people, green means covered. You see straight away which shifts need action.'] },
-  { x: 48, y: 58, nl: ['Opkomstdagen en invallers', 'Lars Meijer komt op als opkomer (opk). Opkomers hebben een eigen regel in dezelfde matrix.'], en: ['On-call days and cover', 'Lars Meijer is covering (opk). Cover staff get their own row in the same matrix.'] },
-  { x: 81.5, y: 35, nl: ['Saldo, verlof en overwerk', 'De uren per medewerker staan naast het rooster, dus geen los lijstje ernaast.'], en: ['Balance, leave and overtime', 'Hours per employee sit next to the roster, so there is no separate list to keep.'] },
+  { x: 53, y: 39.7, nl: ['Verlof met bezetting in beeld', 'Ruud Brouwer heeft verlof op donderdag 17 september. Onderaan zie je meteen wat dat met de bezetting doet: het overschot van +1 zakt naar +0.'], en: ['Leave with staffing in view', 'Ruud Brouwer is on leave on Thursday 17 September. The bottom rows show right away what that does to staffing: the surplus of +1 drops to +0.'] },
+  { x: 56.4, y: 92.2, nl: ['Tekorten in één oogopslag', 'Onderaan staat per dag het verschil met de minimumbezetting. Groen is voldoende, rood is te weinig mensen.'], en: ['Shortages at a glance', 'The bottom row shows the difference from minimum staffing per day. Green is covered, red is too few people.'] },
+  { x: 59.8, y: 30.1, nl: ['Opkomstdagen en invallers', 'Op maandag 21 september komt Mark de Jong op als opkomer (opk). Opkomers hebben een eigen regel in dezelfde matrix.'], en: ['On-call days and cover', 'On Monday 21 September Mark de Jong covers as on-call (opk). Cover staff get their own row in the same matrix.'] },
+  { x: 77.2, y: 36.4, nl: ['Saldo, verlof en overwerk', 'De uren per medewerker staan naast het rooster, dus geen los lijstje ernaast.'], en: ['Balance, leave and overtime', 'Hours per employee sit next to the roster, so there is no separate list to keep.'] },
 ] as const;
 
 const COPY = {
@@ -39,7 +39,7 @@ export default function RoosterPreview({ locale }: { locale: Locale }) {
   return (
     <div className="actual-app-preview">
       <div className="preview-canvas" ref={canvas}>
-        <img src="/petroshift-rooster.png" alt={t.alt} width="1655" height="1275" />
+        <img src="/petroshift-rooster.png" alt={t.alt} width="2400" height="1452" />
         {SPOTS.map((s, i) => (
           <button key={i} type="button" className={`hotspot${touched ? '' : ' hint'}${active === i ? ' on' : ''}`} style={pos(s)} aria-label={t.spot(i + 1)} aria-expanded={active === i} onClick={() => { setTouched(true); setActive(active === i ? null : i); }}>
             <span className="hotspot-dot" />
