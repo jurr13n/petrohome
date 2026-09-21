@@ -26,6 +26,17 @@ const TTL = 60 * 60 * 24 * 90;
 const MAX_MSGS = 200;
 
 // ---- Redis (productie) ----
+// Zonder automatische deserialisatie geeft HGETALL een platte lijst [veld, waarde, ...] terug; maak er een object van.
+function toObj(raw: unknown): Record<string, string> | null {
+  if (!raw) return null;
+  if (Array.isArray(raw)) {
+    if (!raw.length) return null;
+    const o: Record<string, string> = {};
+    for (let i = 0; i + 1 < raw.length; i += 2) o[String(raw[i])] = String(raw[i + 1]);
+    return o;
+  }
+  return typeof raw === 'object' && Object.keys(raw as object).length ? (raw as Record<string, string>) : null;
+}
 function redisStore(redis: Redis): Store {
   const ck = (id: string) => `chat:conv:${id}`;
   const mk = (id: string) => `chat:msgs:${id}`;
@@ -52,7 +63,7 @@ function redisStore(redis: Redis): Store {
       await p.exec();
       return { conv, msg };
     },
-    async getConv(id) { return toConv(await redis.hgetall<Record<string, string>>(ck(id))); },
+    async getConv(id) { return toConv(toObj(await redis.hgetall(ck(id)))); },
     async addMsg(id, from, text) {
       const cur = await store.getConv(id);
       if (!cur) return null;
@@ -81,16 +92,21 @@ function redisStore(redis: Redis): Store {
       if (!ids.length) return [];
       const p = redis.pipeline();
       ids.forEach((i) => p.hgetall(ck(i)));
-      const rows = (await p.exec()) as Array<Record<string, string> | null>;
-      return rows.map(toConv).filter((c): c is Conv => !!c);
+      const rows = (await p.exec()) as unknown[];
+      return rows.map((r) => toConv(toObj(r))).filter((c): c is Conv => !!c);
     },
     async markRead(id) { await redis.hset(ck(id), { unread: '0' }); },
     async setStatus(id, status) { await redis.hset(ck(id), { status }); },
     async savePush(sub) { await redis.hset('chat:push', { [sub.endpoint]: JSON.stringify(sub) }); },
     async removePush(endpoint) { await redis.hdel('chat:push', endpoint); },
     async listPush() {
-      const all = await redis.hgetall<Record<string, string>>('chat:push');
-      return all ? Object.values(all).map((v) => JSON.parse(v) as PushSub) : [];
+      const all = toObj(await redis.hgetall('chat:push'));
+      if (!all) return [];
+      const subs: PushSub[] = [];
+      for (const v of Object.values(all)) {
+        try { subs.push(JSON.parse(v) as PushSub); } catch { /* kapot abonnement overslaan */ }
+      }
+      return subs;
     },
     async hit(key, ttlSec) {
       const n = await redis.incr(key);
