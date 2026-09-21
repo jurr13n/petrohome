@@ -347,3 +347,8 @@ body{padding-inline:env(safe-area-inset-left,0px) env(safe-area-inset-right,0px)
   .feature h3,.feature p,.integration-card h3,.integration-card p{animation:text-in linear both;animation-timeline:view();animation-range:entry 10% entry 55%}
   .feature p,.integration-card p{animation-range:entry 20% entry 65%}
 }
+
+/* Integraties zonder Workday-kaart: één kolom met leesbare regelbreedte */
+.integration-grid{grid-template-columns:1fr;gap:0}
+.integration-grid>div{max-width:760px}
+.integration-grid .section-intro{max-width:600px}
