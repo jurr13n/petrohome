@@ -150,7 +150,7 @@ export default function ChatWidget() {
     try {
       const { status, data } = await post('/api/chat/start', { ...form, locale });
       if (status === 429) setError(t.rate);
-      else if (!data.ok) setError(status === 400 ? t.invalid : t.failed);
+      else if (!data.ok) setError(status === 400 ? t.invalid : data.detail ? `${t.failed} (${data.detail})` : t.failed);
       else {
         const s = { id: data.id, token: data.token, seen: 0 };
         lastId.current = 0; setMsgs([]); apply(data.messages || []);
@@ -169,7 +169,7 @@ export default function ChatWidget() {
     try {
       const { status, data } = await post('/api/chat/send', { id: session.id, token: session.token, text });
       if (status === 429) setError(t.rate);
-      else if (!data.ok) setError(t.failed);
+      else if (!data.ok) setError(data.detail ? `${t.failed} (${data.detail})` : t.failed);
       else { apply([data.message]); setDraft(''); setClosed(false); }
     } catch { setError(t.failed); }
     setBusy(false);
