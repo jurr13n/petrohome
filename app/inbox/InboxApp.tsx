@@ -1,7 +1,7 @@
 'use client';
 
 import { useCallback, useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from 'react';
-import { ArrowLeft, Bell, BellOff, Check, LogOut, Mail, Send } from 'lucide-react';
+import { ArrowLeft, Bell, BellOff, Check, LogOut, Mail, Send, Trash2 } from 'lucide-react';
 
 type Msg = { id: number; from: 'visitor' | 'owner'; text: string; ts: number };
 type Conv = { id: string; name: string; email: string; locale: 'nl' | 'en'; createdAt: number; lastAt: number; lastFrom: 'visitor' | 'owner'; lastText: string; unread: number; status: 'open' | 'closed' };
@@ -38,6 +38,8 @@ export default function InboxApp() {
   const [notif, setNotif] = useState<'unsupported' | 'off' | 'on' | 'denied'>('off');
   const [notifMsg, setNotifMsg] = useState('');
   const [needsInstall, setNeedsInstall] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
+  const confirmTimer = useRef<ReturnType<typeof setTimeout>>(undefined);
 
   const activeRef = useRef<string | null>(null);
   const lastId = useRef(0);
@@ -65,14 +67,14 @@ export default function InboxApp() {
   }, [loadList]);
 
   const open = useCallback(async (id: string) => {
-    setActive(id); activeRef.current = id; setDraft('');
+    setActive(id); activeRef.current = id; setDraft(''); setConfirmDelete(false);
     history.replaceState(null, '', `/inbox?c=${id}`);
     await loadThread(id, true);
     await api('/api/inbox/read', { id });
     loadList();
   }, [loadThread, loadList]);
 
-  const back = () => { setActive(null); history.replaceState(null, '', '/inbox'); loadList(); };
+  const back = () => { setActive(null); setConfirmDelete(false); history.replaceState(null, '', '/inbox'); loadList(); };
 
   useEffect(() => { loadList(); }, [loadList]);
 
@@ -164,6 +166,26 @@ export default function InboxApp() {
   const onKey = (e: KeyboardEvent<HTMLTextAreaElement>) => { if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) { e.preventDefault(); reply(); } };
   const toggleClosed = async () => { if (!current) return; await api('/api/inbox/close', { id: current.id, status: current.status === 'open' ? 'closed' : 'open' }); loadList(); };
 
+  // Verwijderen vraagt een tweede tik binnen 4 s te bevestigen, in plaats van een systeempopup.
+  const askDelete = () => {
+    setConfirmDelete(true);
+    clearTimeout(confirmTimer.current);
+    confirmTimer.current = setTimeout(() => setConfirmDelete(false), 4000);
+  };
+  const deleteConv = async () => {
+    if (!current) return;
+    clearTimeout(confirmTimer.current);
+    setBusy(true);
+    const { data } = await api('/api/inbox/delete', { id: current.id });
+    setBusy(false);
+    if (data.ok) {
+      setConfirmDelete(false);
+      setConvs((cur) => cur.filter((c) => c.id !== current.id));
+      setActive(null); activeRef.current = null; setMsgs([]);
+      history.replaceState(null, '', '/inbox');
+    }
+  };
+
   if (auth === 'checking') return <main className="ib-center"><p className="ib-muted">Laden…</p></main>;
 
   if (auth === 'login') {
@@ -220,6 +242,11 @@ export default function InboxApp() {
                 <button type="button" className="ib-back" onClick={back} aria-label="Terug naar gesprekken"><ArrowLeft size={20} /></button>
                 <div><strong>{current.name}</strong><a href={`mailto:${current.email}`}><Mail size={13} /> {current.email}</a></div>
                 <button type="button" className="ib-done" onClick={toggleClosed}>{current.status === 'open' ? <><Check size={15} /> Afronden</> : 'Heropen'}</button>
+                {confirmDelete ? (
+                  <button type="button" className="ib-delete confirm" onClick={deleteConv} disabled={busy} onBlur={() => setConfirmDelete(false)}>Zeker weten?</button>
+                ) : (
+                  <button type="button" className="ib-delete" onClick={askDelete} aria-label="Gesprek verwijderen"><Trash2 size={16} /></button>
+                )}
               </header>
               <div className="ib-msgs" ref={list}>
                 {msgs.map((m) => (

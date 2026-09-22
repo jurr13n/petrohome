@@ -16,6 +16,7 @@ export interface Store {
   listConvs(limit: number): Promise<Conv[]>;
   markRead(id: string): Promise<void>;
   setStatus(id: string, status: Conv['status']): Promise<void>;
+  deleteConv(id: string): Promise<void>;
   savePush(sub: PushSub): Promise<void>;
   removePush(endpoint: string): Promise<void>;
   listPush(): Promise<PushSub[]>;
@@ -97,6 +98,13 @@ function redisStore(redis: Redis): Store {
     },
     async markRead(id) { await redis.hset(ck(id), { unread: '0' }); },
     async setStatus(id, status) { await redis.hset(ck(id), { status }); },
+    async deleteConv(id) {
+      const p = redis.pipeline();
+      p.del(ck(id));
+      p.del(mk(id));
+      p.zrem('chat:index', id);
+      await p.exec();
+    },
     async savePush(sub) { await redis.hset('chat:push', { [sub.endpoint]: JSON.stringify(sub) }); },
     async removePush(endpoint) { await redis.hdel('chat:push', endpoint); },
     async listPush() {
@@ -144,6 +152,7 @@ function memoryStore(): Store {
     async listConvs(limit) { return [...mem.convs.values()].sort((a, b) => b.lastAt - a.lastAt).slice(0, limit).map((c) => ({ ...c })); },
     async markRead(id) { const c = mem.convs.get(id); if (c) c.unread = 0; },
     async setStatus(id, status) { const c = mem.convs.get(id); if (c) c.status = status; },
+    async deleteConv(id) { mem.convs.delete(id); mem.msgs.delete(id); },
     async savePush(sub) { mem.push.set(sub.endpoint, sub); },
     async removePush(endpoint) { mem.push.delete(endpoint); },
     async listPush() { return [...mem.push.values()]; },
