@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Prijzen van PetroShift per pakket, met rekenhulp en alle functies.">
+<title>PetroShift Prijzen</title>
+<link rel="icon" href="/icon.png">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --paper:#F5F8FA; --sheet:#FFFFFF; --ink:#0B1B2B; --steel:#51616F; --line:#DCE4EA;
+  --petro:#0A86BC; --petro-soft:#E3F2F9; --ok:#17875C; --ok-soft:#E2F4EC; --no:#A8B3BD;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){color-scheme:dark;
+  --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F; --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F; --no:#4A5A68;}}
+:root[data-theme="dark"]{color-scheme:dark;
+  --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F; --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F; --no:#4A5A68;}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;padding-inline:16px;padding-block:0 56px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1040px;margin:0 auto;display:grid;gap:48px}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,5vw,44px)} h2{font-size:24px} h3{font-size:17px}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:600;text-transform:uppercase;color:var(--petro)}
+.muted{color:var(--steel)}
+section{display:grid;gap:18px}
+.hero{display:grid;gap:14px;max-width:70ch;padding-top:12px}
+.lead{font-size:17px;color:var(--steel)}
+.promise{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px}
+.promise span::before{content:"✓ ";color:var(--ok);font-weight:700}
+
+.tiers{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px;align-items:stretch}
+.tier{background:var(--sheet);border:1px solid var(--line);border-radius:18px;padding:22px;display:grid;gap:14px;align-content:start}
+.tier.featured{border:2px solid var(--petro)}
+.tier .badge{justify-self:start;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;background:var(--petro);color:#fff;padding:3px 10px;border-radius:999px}
+.tier .for{font-size:13.5px;color:var(--steel);min-height:42px}
+.price{display:flex;align-items:baseline;gap:6px;font-variant-numeric:tabular-nums}
+.price b{font-family:Outfit,sans-serif;font-size:40px;letter-spacing:-.03em;line-height:1}
+.price span{font-size:13px;color:var(--steel)}
+.tier ul{margin:0;padding:0;list-style:none;display:grid;gap:7px;font-size:14px}
+.tier li{padding-left:22px;position:relative}
+.tier li::before{content:"✓";position:absolute;left:0;color:var(--ok);font-weight:700}
+.tier li.plus::before{content:"+";color:var(--petro)}
+.tier .inherit{font-size:13px;font-weight:600;color:var(--steel)}
+
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--sheet)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:14px}
+th,td{padding:9px 14px;border-bottom:1px solid var(--line);text-align:left;vertical-align:top}
+thead th{font-size:12px;font-weight:600;color:var(--steel);text-transform:uppercase;letter-spacing:.06em;background:var(--paper)}
+thead th:not(:first-child),td:not(:first-child){text-align:center;width:14%}
+tr.cat td{background:var(--paper);font-family:Outfit,sans-serif;font-weight:600;font-size:14px;padding-top:14px}
+td small{display:block;color:var(--steel);font-size:12.5px}
+.y{color:var(--ok);font-weight:700} .n{color:var(--no)} .a{font-size:12px;font-weight:600;color:var(--petro)}
+tbody tr:last-child td{border-bottom:0}
+
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:18px 20px;display:grid;gap:10px;align-content:start}
+.rows{display:grid;gap:10px}
+.row{display:flex;justify-content:space-between;gap:16px;align-items:baseline;border-bottom:1px dashed var(--line);padding-bottom:8px}
+.row:last-child{border-bottom:0;padding-bottom:0}
+.row .v{font-variant-numeric:tabular-nums;font-weight:600;white-space:nowrap}
+.row small{display:block;color:var(--steel);font-size:12.5px;font-weight:400}
+
+.calc{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:20px;background:var(--sheet);border:1px solid var(--line);border-radius:18px;padding:22px}
+@media (max-width:720px){.calc{grid-template-columns:1fr}}
+.field{display:grid;gap:6px}
+.field label,.field .lbl{font-size:13px;font-weight:600}
+input[type=range]{width:100%;accent-color:var(--petro)}
+input[type=number]{font:inherit;width:110px;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+.seg{display:flex;flex-wrap:wrap;gap:6px}
+.seg button{font:inherit;font-size:13.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line);background:var(--paper);color:var(--ink);cursor:pointer;transition:transform 100ms ease-out}
+.seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.seg button:active{transform:scale(.97)}
+.checks{display:grid;gap:6px;font-size:14px}
+.checks label{display:flex;gap:8px;align-items:center}
+.out{display:grid;gap:10px;align-content:start;background:var(--paper);border-radius:14px;padding:18px}
+.out .big{font-family:Outfit,sans-serif;font-size:34px;font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.out .row .v{font-weight:500}
+.out .total{border-top:1px solid var(--line);padding-top:10px;font-weight:600}
+button:focus-visible,input:focus-visible{outline:2px solid var(--petro);outline-offset:2px}
+
+.terms{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:12px 28px;font-size:14px}
+.terms div{display:grid;gap:4px}
+.terms b{font-family:Outfit,sans-serif;font-size:15px}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;align-items:center;border-top:1px solid var(--line);padding-top:22px;font-size:13px;color:var(--steel)}
+.btn{display:inline-flex;padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;background:var(--petro);color:#fff}
+/* Apple-laag: typografie, materialen, directe feedback */
+:root{--glass:rgba(245,248,250,.72);--glass-edge:rgba(255,255,255,.6);--shadow-s:0 1px 2px rgba(11,27,43,.05),0 2px 8px rgba(11,27,43,.04);--shadow-l:0 2px 6px rgba(11,27,43,.05),0 18px 44px -12px rgba(11,27,43,.16)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass:rgba(11,20,28,.7);--glass-edge:rgba(255,255,255,.06);--shadow-s:0 1px 2px rgba(0,0,0,.3);--shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55)}}
+:root[data-theme="dark"]{--glass:rgba(11,20,28,.7);--glass-edge:rgba(255,255,255,.06);--shadow-s:0 1px 2px rgba(0,0,0,.3);--shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55)}
+body{font-size:15px;line-height:1.55;letter-spacing:-.006em;font-optical-sizing:auto}
+h1{letter-spacing:-.032em;line-height:1.06;font-weight:700}
+h2{letter-spacing:-.022em;line-height:1.15}
+h3{letter-spacing:-.012em;line-height:1.3}
+.eyebrow,th,.tag,.step::before,.plan .when{letter-spacing:.07em}
+small,.muted,.hint,.legend{letter-spacing:.004em}
+/* glazen kopbalk, inhoud scrolt eronder */
+.glassbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-inline:-16px;padding:10px 16px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--glass-edge);-webkit-mask-image:linear-gradient(#000 calc(100% - 1px),transparent)}
+/* diepte naar grootte: groot vlak dikker dan klein */
+.matrix-card,.proc{box-shadow:var(--shadow-l)}
+.role,.card,.plan div,.tbl{box-shadow:var(--shadow-s)}
+.matrix-card{border-radius:16px} .role,.card,.plan div{border-radius:14px}
+/* directe feedback bij indrukken */
+.btn,.chip{transition:transform 100ms ease-out,background-color 150ms ease-out,color 150ms ease-out;-webkit-tap-highlight-color:transparent}
+.btn:active,.chip:active{transform:scale(.97)}
+.btn{border-radius:999px;padding:10px 18px}
+@media (hover:hover){.btn.ghost:hover{background:var(--petro-soft)}.chip:hover{border-color:var(--steel)}}
+@media (prefers-reduced-motion: reduce){.btn,.chip{transition:none}.btn:active,.chip:active{transform:none}}
+@media (prefers-reduced-transparency: reduce){.glassbar{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast: more){.glassbar{background:var(--paper);border-bottom-color:var(--ink)}.role,.card,.tbl,.matrix-card{border-color:var(--ink)}}
+.logo{height:44px;width:auto;display:block}
+.logo-wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo-wrap small{font-size:13px;color:var(--steel)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo{background:#fff;padding:6px 10px;border-radius:8px;box-sizing:content-box}}
+:root[data-theme="dark"] .logo{background:#fff;padding:6px 10px;border-radius:8px;box-sizing:content-box}
+.tier{box-shadow:var(--shadow-s)} .tier.featured{box-shadow:var(--shadow-l)} .calc{box-shadow:var(--shadow-l)}
+.price{flex-wrap:wrap;column-gap:8px}
+.price b{white-space:nowrap}
+.card .row{display:grid;grid-template-columns:1fr auto;column-gap:16px;row-gap:3px}
+.card .row>div{display:contents}
+.card .row small{grid-column:1/-1;order:3}
+.card .row .v{order:2;color:var(--petro)}
+.wrap{grid-template-columns:minmax(0,1fr)} .wrap>*,section{min-width:0}
+</style>
+<style>html,body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="glassbar"><div class="logo-wrap"><img class="logo" src="/petroshift-logo-header.png" alt="PetroShift" width="532" height="132"><small>ploegenrooster voor de procesindustrie</small></div></div>
+
+  <header class="hero">
+    <span class="eyebrow">Prijzen</span>
+    <h1>Eén prijs per medewerker. Geen verrassingen achteraf.</h1>
+    <p class="lead">U betaalt per actieve medewerker per maand en eenmalig voor de inrichting. Inloggen met Microsoft, beveiliging, export en support zitten in elk pakket. Maandelijks opzegbaar.</p>
+    <div class="promise"><span>SSO zonder meerprijs</span><span>Geen koppelkosten voor export</span><span>Maandelijks opzegbaar</span><span>Geen jaarlijkse prijsverhoging boven de inflatie</span></div>
+  </header>
+
+  <section>
+    <div class="tiers">
+      <div class="tier">
+        <h3>Rooster</h3>
+        <p class="for">Voor een afdeling die van Excel en WhatsApp af wil.</p>
+        <div class="price"><b>€ 6</b><span>per medewerker per maand</span></div>
+        <ul>
+          <li>Roostermatrix met elk ploegenpatroon</li>
+          <li>Tekort en teveel per dag in beeld</li>
+          <li>Opkomer zoeken met ATW-rustcontrole</li>
+          <li>Open diensten en zelf aanmelden</li>
+          <li>Verlof, ruilen, vervangers en ploegwissels</li>
+          <li>Pushmeldingen en agenda-koppeling</li>
+          <li>Inloggen met Microsoft (SSO) en 2FA</li>
+        </ul>
+      </div>
+      <div class="tier featured">
+        <span class="badge">Meest gekozen voor 5-ploegen</span>
+        <h3>Ploegendienst</h3>
+        <p class="for">Voor een site die bezetting per positie en de zomer wil beheersen.</p>
+        <div class="price"><b>€ 9</b><span>per medewerker per maand</span></div>
+        <p class="inherit">Alles uit Rooster, plus:</p>
+        <ul>
+          <li class="plus">Indeling per installatie en positie, met automatisch voorstel</li>
+          <li class="plus">Skills-matrix met geldigheidsdatum</li>
+          <li class="plus">Vakantierooster met automatisch aanvullen</li>
+          <li class="plus">Vooruitplanning en open-dienstbeheer</li>
+          <li class="plus">Rapportages over bezetting, verzuim en overwerk</li>
+          <li class="plus">Meerdere afdelingen</li>
+        </ul>
+      </div>
+      <div class="tier">
+        <h3>Site</h3>
+        <p class="for">Voor een site met onderhoudsstops en afspraken over beschikbaarheid.</p>
+        <div class="price"><b>€ 12</b><span>per medewerker per maand</span></div>
+        <p class="inherit">Alles uit Ploegendienst, plus:</p>
+        <ul>
+          <li class="plus">Stoprooster met urenverwerking</li>
+          <li class="plus">Workday-controle voor verlofsaldi</li>
+          <li class="plus">SLA met 99,5% beschikbaarheid en servicecredits</li>
+          <li class="plus">Telefonisch bereikbaar bij een kritieke storing</li>
+          <li class="plus">Nieuwe versies vooraf bekijken op de acceptatieomgeving</li>
+          <li class="plus">Factuur per afdeling en serviceoverleg per kwartaal</li>
+        </ul>
+      </div>
+    </div>
+    <p class="muted" style="font-size:13px">Alle bedragen excl. btw. Een actieve medewerker is iedereen die in die maand is ingeroosterd of inlogt. Minimaal € 250 per maand per bedrijf. Bij jaarbetaling vooraf 10% korting.</p>
+  </section>
+
+  <section>
+    <h2>Uitbreidingen</h2>
+    <div class="cols">
+      <div class="card">
+        <div class="rows">
+          <div class="row"><div>AI-assistent voor ploegleiders<small>Vragen over invallers, bezetting en rusttijden, in de app of via WhatsApp. Alleen lezen, geen wijzigingen.</small></div><span class="v">€ 15 per ploegleider / mnd</span></div>
+          <div class="row"><div>Meldingen via WhatsApp<small>Na toestemming van de medewerker. Inclusief de berichtkosten van WhatsApp, tot 20 berichten per medewerker per maand.</small></div><span class="v">€ 0,75 per medewerker / mnd</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="rows">
+          <div class="row"><div>Zelf hosten<small>PetroShift draait in uw eigen omgeving, zodat geen gegevens uw netwerk verlaten.</small></div><span class="v">Op aanvraag</span></div>
+          <div class="row"><div>Maatwerk en koppelingen<small>Bijvoorbeeld een koppeling met uw salaris- of HR-systeem. Vooraf begroot.</small></div><span class="v">€ 95 per uur</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Eenmalig: inrichting</h2>
+    <div class="cols">
+      <div class="card">
+        <div class="rows">
+          <div class="row"><div>Inrichting per site<small>Tot 150 medewerkers. Uw ploegenpatroon, afdelingen, installaties en posities, import van medewerkers en skills, SSO-koppeling, twee trainingen voor ploegleiders en beheerders, en begeleiding tijdens de eerste vier weken.</small></div><span class="v">€ 2.500</span></div>
+          <div class="row"><div>Elke 50 medewerkers daarboven<small>Extra import en een extra training.</small></div><span class="v">€ 500</span></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="rows">
+          <div class="row"><div>Proef van 4 weken<small>Eén afdeling naast uw huidige rooster. Vooraf spreken we af wanneer de proef geslaagd is. Gaat u daarna door, dan wordt de proef verrekend met de inrichting.</small></div><span class="v">€ 500</span></div>
+          <div class="row"><div>Extra training<small>Op locatie of online, per sessie van twee uur.</small></div><span class="v">€ 250</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Reken het uit</h2>
+    <div class="calc" id="calc">
+      <div style="display:grid;gap:18px">
+        <div class="field">
+          <label for="mw">Aantal medewerkers in het rooster</label>
+          <div style="display:flex;gap:12px;align-items:center"><input id="mw" type="range" min="10" max="600" step="5" value="150"><input id="mwn" type="number" min="1" max="5000" value="150" aria-label="Aantal medewerkers"></div>
+        </div>
+        <div class="field"><span class="lbl">Pakket</span><div class="seg" id="tier"></div></div>
+        <div class="field"><span class="lbl">Uitbreidingen</span>
+          <div class="checks">
+            <label><input type="checkbox" id="ai"> AI-assistent voor <input type="number" id="ptl" min="1" max="200" value="5" style="width:64px"> ploegleiders</label>
+            <label><input type="checkbox" id="wa"> Meldingen via WhatsApp</label>
+            <label><input type="checkbox" id="jaar"> Jaarbetaling vooraf (10% korting)</label>
+          </div>
+        </div>
+      </div>
+      <div class="out" aria-live="polite">
+        <span class="muted" style="font-size:13px">Per maand, excl. btw</span>
+        <div class="big" id="pm">€ 0</div>
+        <div class="rows" id="lines"></div>
+        <div class="row total"><span>Eerste jaar, inclusief inrichting</span><span class="v" id="y1"></span></div>
+        <div class="row"><span>Drie jaar totaal</span><span class="v" id="y3"></span></div>
+        <div class="row"><span>Alles inbegrepen, per medewerker per maand over drie jaar</span><span class="v" id="allin"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Alle functies per pakket</h2>
+    <div class="tbl">
+      <table>
+        <thead><tr><th>Functie</th><th>Rooster</th><th>Ploegendienst</th><th>Site</th></tr></thead>
+        <tbody id="matrix"></tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <h2>Voorwaarden</h2>
+    <div class="terms">
+      <div><b>Maandelijks opzegbaar</b><span class="muted">Met een opzegtermijn van één maand. Wij zeggen niet op met minder dan zes maanden, zodat u tijd heeft om over te stappen.</span></div>
+      <div><b>Uw gegevens blijven van u</b><span class="muted">Bij het einde krijgt u binnen 5 werkdagen een volledige export in JSON en CSV. Daarna wissen we alles binnen 30 dagen.</span></div>
+      <div><b>Prijs vast voor een jaar</b><span class="muted">Daarna hooguit een verhoging gelijk aan de inflatie (CBS-cao-lonenindex), drie maanden vooraf aangekondigd.</span></div>
+      <div><b>Geen verborgen kosten</b><span class="muted">SSO, export, beveiliging, updates en support binnen kantooruren zitten in de prijs. Wat erbuiten valt, staat op deze pagina.</span></div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <span>Prijzen per 1 oktober 2026, excl. btw. Aan deze pagina kunnen geen rechten worden ontleend; de offerte is leidend.</span>
+    <span style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn" style="background:transparent;color:var(--petro);border:1px solid var(--petro)" href="petroshift.html">Wat PetroShift doet</a><a class="btn" href="https://petroshift.nl" target="_blank" rel="noopener">Plan een demo</a></span>
+  </footer>
+</div>
+
+<script>
+const TIERS=[{k:"rooster",n:"Rooster",p:6},{k:"ploeg",n:"Ploegendienst",p:9},{k:"site",n:"Site",p:12}];
+const Y="<span class='y' aria-label='inbegrepen'>✓</span>", N="<span class='n' aria-label='niet inbegrepen'>–</span>", A="<span class='a'>uitbreiding</span>";
+const M=[
+ ["Rooster en planning"],
+ ["Roostermatrix, ploegen-, week- en maandweergave","Elk ploegenpatroon, jaren vooruit en terug",Y,Y,Y],
+ ["Feestdagen, celopmerkingen en losse matrix in een apart venster","",Y,Y,Y],
+ ["Vooruitplanning en open-dienstbeheer","",N,Y,Y],
+ ["Vakantierooster","Tekortanalyse, automatisch aanvullen met opkomst- en schuifdagen, eerlijke verdeling",N,Y,Y],
+ ["Stoprooster","Deelnemers uit alle ploegen, blokken per dag, urenverwerking naar overwerk",N,N,Y],
+ ["Bezetting"],
+ ["Tekort en teveel per dag, minimum per dienst","",Y,Y,Y],
+ ["Opkomer zoeken met rangschikking","Op beschikbaarheid, rusttijd en overwerkuren",Y,Y,Y],
+ ["Rustcontrole volgens de Arbeidstijdenwet","Harde blokkade en meldingen over dagen en weken",Y,Y,Y],
+ ["Open diensten en zelf aanmelden","",Y,Y,Y],
+ ["Indeling per installatie en positie","Met automatisch voorstel",N,Y,Y],
+ ["Skills-matrix met geldigheidsdatum","",N,Y,Y],
+ ["Voor medewerkers"],
+ ["Verlof aanvragen met bezetting in beeld","",Y,Y,Y],
+ ["Diensten ruilen, vervanger zoeken, permanente ploegwissel","",Y,Y,Y],
+ ["Persoonlijk dashboard","Komende diensten, verlofmeter, wie lost jou af",Y,Y,Y],
+ ["Pushmeldingen en app op het beginscherm","",Y,Y,Y],
+ ["Agenda-koppeling","Outlook, Google en Apple Agenda",Y,Y,Y],
+ ["Meldingen via WhatsApp","",A,A,A],
+ ["Rapportages en beheer"],
+ ["Rapportages over bezetting, verzuim en overwerk","",N,Y,Y],
+ ["Meerdere afdelingen","",N,Y,Y],
+ ["Rollen: operator, ploegleider, vervangend ploegleider, beheerder","Met instelbare rechten",Y,Y,Y],
+ ["Factuur per afdeling","",N,N,Y],
+ ["AI-assistent voor ploegleiders","",A,A,A],
+ ["Koppelingen"],
+ ["Inloggen met Microsoft (SSO)","",Y,Y,Y],
+ ["Volledige export in JSON en CSV","",Y,Y,Y],
+ ["Workday-controle voor verlofsaldi","",N,N,Y],
+ ["Beveiliging en privacy"],
+ ["Tweestapsverificatie, begrensde inlogpogingen, auditlog","",Y,Y,Y],
+ ["Versleuteling van gevoelige velden","",Y,Y,Y],
+ ["Medewerkers exporteren en wissen eigen gegevens (AVG)","",Y,Y,Y],
+ ["Verwerkersovereenkomst en beveiligingsdossier","",Y,Y,Y],
+ ["Support"],
+ ["Support per e-mail binnen kantooruren","",Y,Y,Y],
+ ["SLA met 99,5% beschikbaarheid en servicecredits","",N,N,Y],
+ ["Telefonisch bij een kritieke storing","",N,N,Y],
+ ["Nieuwe versies vooraf bekijken op de acceptatieomgeving","",N,N,Y],
+ ["Serviceoverleg per kwartaal","",N,N,Y],
+];
+document.getElementById("matrix").innerHTML=M.map(r=>r.length===1?`<tr class="cat"><td colspan="4">${r[0]}</td></tr>`:`<tr><td>${r[0]}${r[1]?`<small>${r[1]}</small>`:""}</td><td>${r[2]}</td><td>${r[3]}</td><td>${r[4]}</td></tr>`).join("");
+
+const st={mw:150,tier:"ploeg"};
+const eur=(v,d=0)=>"€ "+v.toLocaleString("nl-NL",{minimumFractionDigits:d,maximumFractionDigits:d});
+const seg=document.getElementById("tier");
+TIERS.forEach(t=>{const b=document.createElement("button");b.type="button";b.textContent=`${t.n} · € ${t.p}`;b.dataset.k=t.k;b.setAttribute("aria-pressed",t.k===st.tier);b.onclick=()=>{st.tier=t.k;[...seg.children].forEach(x=>x.setAttribute("aria-pressed",x.dataset.k===st.tier));calc();};seg.appendChild(b);});
+const $=id=>document.getElementById(id);
+$("mw").oninput=e=>{$("mwn").value=e.target.value;calc();};
+$("mwn").oninput=e=>{const v=Math.max(1,+e.target.value||1);$("mw").value=Math.min(600,v);calc();};
+["ai","ptl","wa","jaar"].forEach(id=>$(id).addEventListener("input",calc));
+function calc(){
+  const mw=Math.max(1,+$("mwn").value||1), t=TIERS.find(x=>x.k===st.tier);
+  const lines=[[`${t.n}: ${mw} × € ${t.p}`,mw*t.p]];
+  if($("ai").checked){const n=Math.max(1,+$("ptl").value||1);lines.push([`AI-assistent: ${n} × € 15`,n*15]);}
+  if($("wa").checked) lines.push([`WhatsApp: ${mw} × € 0,75`,mw*0.75]);
+  let sub=lines.reduce((a,l)=>a+l[1],0);
+  if(sub<250){lines.push(["Aanvulling tot het minimum",250-sub]);sub=250;}
+  const disc=$("jaar").checked?sub*0.1:0; if(disc) lines.push(["Korting jaarbetaling",-disc]);
+  const pm=sub-disc, setup=2500+Math.max(0,Math.ceil((mw-150)/50))*500;
+  $("pm").textContent=eur(pm,2).replace(",00","");
+  $("lines").innerHTML=lines.map(l=>`<div class="row"><span>${l[0]}</span><span class="v">${eur(l[1],2)}</span></div>`).join("")+`<div class="row"><span>Inrichting (eenmalig)</span><span class="v">${eur(setup)}</span></div>`;
+  $("y1").textContent=eur(pm*12+setup); $("y3").textContent=eur(pm*36+setup);
+  $("allin").textContent=eur((pm*36+setup)/36/mw,2);
+}
+calc();
+</script>
+</body>
+</html>

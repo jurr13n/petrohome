@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="PetroShift: ploegenrooster voor 5-ploegendiensten in de procesindustrie.">
+<title>PetroShift voor de procesindustrie</title>
+<link rel="icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;600&display=swap">
+<style>
+:root{
+  --paper:#F5F8FA; --sheet:#FFFFFF; --ink:#0B1B2B; --steel:#51616F; --line:#D9E2E9;
+  --petro:#0A86BC; --petro-soft:#E3F2F9; --short:#C8352A; --short-soft:#FBE7E5;
+  --ok:#17875C; --ok-soft:#E2F4EC; --warn:#B7700A; --warn-soft:#FBF0DD;
+  --n:#2B3A67; --n-soft:#E6E9F4;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
+    --petro:#3CB4E6; --petro-soft:#0F2C3B; --short:#F0776B; --short-soft:#3A1A17;
+    --ok:#4FCB93; --ok-soft:#10301F; --warn:#E9A948; --warn-soft:#352711;
+    --n:#A9B6E8; --n-soft:#1C2340;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
+  --petro:#3CB4E6; --petro-soft:#0F2C3B; --short:#F0776B; --short-soft:#3A1A17;
+  --ok:#4FCB93; --ok-soft:#10301F; --warn:#E9A948; --warn-soft:#352711;
+  --n:#A9B6E8; --n-soft:#1C2340;
+}
+*{box-sizing:border-box}
+body{background:var(--paper);color:var(--ink);font:15px/1.6 Inter,system-ui,sans-serif;padding-inline:16px;padding-block:32px 48px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:880px;margin:0 auto;display:grid;gap:40px}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;letter-spacing:-.02em;margin:0;text-wrap:balance;line-height:1.15}
+h1{font-size:clamp(30px,5vw,44px);font-weight:700}
+h2{font-size:24px;font-weight:600}
+h3{font-size:17px;font-weight:600}
+p{margin:0}
+.mono{font-family:"JetBrains Mono",ui-monospace,monospace}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--petro)}
+.lead{font-size:17px;color:var(--steel);max-width:60ch}
+header.top{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+.brand{font-family:Outfit,sans-serif;font-weight:700;font-size:20px;display:flex;align-items:center;gap:10px}
+.brand i{width:26px;height:26px;border-radius:7px;background:var(--petro);display:grid;place-items:center;color:#fff;font-style:normal;font-size:14px}
+.brand small{font-family:Inter,sans-serif;font-weight:500;font-size:13px;color:var(--steel)}
+.hero{display:grid;gap:20px}
+
+/* roostermatrix */
+.matrix-card{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:12px}
+.matrix-scroll{overflow-x:auto}
+table.m{border-collapse:collapse;font-size:13px;min-width:560px;width:100%;font-variant-numeric:tabular-nums}
+table.m th,table.m td{border:1px solid var(--line);padding:5px 6px;text-align:center}
+table.m th{font-weight:600;color:var(--steel);font-size:12px}
+table.m td.name{text-align:left;white-space:nowrap;font-weight:500}
+table.m td.name span{color:var(--steel);font-weight:400;font-size:12px}
+.c{font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12px}
+.O{background:var(--warn-soft);color:var(--warn)}
+.M{background:var(--petro-soft);color:var(--petro)}
+.N{background:var(--n-soft);color:var(--n)}
+.V{background:var(--ok-soft);color:var(--ok)}
+.Z{background:var(--short-soft);color:var(--short)}
+.op{outline:2px dashed var(--ok);outline-offset:-3px}
+tr.sum td{font-weight:600;background:var(--paper)}
+tr.sum td.lbl{text-align:left;font-weight:500;color:var(--steel)}
+td.bad{color:var(--short);background:var(--short-soft)}
+td.good{color:var(--ok)}
+.hint{display:flex;gap:10px;align-items:flex-start;font-size:13px;color:var(--steel)}
+.hint b{color:var(--ink)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--steel)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend .c{padding:1px 5px;border-radius:4px}
+
+.pains{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.pain{display:grid;gap:8px;align-content:start;padding-top:14px;border-top:2px solid var(--ink)}
+.pain .was{font-size:13px;color:var(--steel)}
+.roles{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:16px}
+.role{background:var(--sheet);border:1px solid var(--line);border-radius:12px;padding:18px;display:grid;gap:10px;align-content:start}
+.role ul{margin:0;padding-left:18px;display:grid;gap:4px;font-size:14px}
+.tag{font-size:12px;font-weight:600;color:var(--petro)}
+
+.proc{background:var(--ink);color:var(--paper);border-radius:14px;padding:24px;display:grid;gap:18px}
+.proc h2{color:var(--paper)}
+.proc p{color:color-mix(in srgb,var(--paper) 78%,transparent)}
+.proc ul{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px 24px;font-size:14px}
+.proc li{padding-left:22px;position:relative}
+.proc li::before{content:"✓";position:absolute;left:0;color:var(--petro);font-weight:700}
+.proc .note{font-size:13px}
+
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;counter-reset:s}
+.step{display:grid;gap:6px;align-content:start}
+.step::before{counter-increment:s;content:"Stap " counter(s);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--petro)}
+.step p{font-size:14px;color:var(--steel)}
+
+footer.cta{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:24px}
+footer.cta .links{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;padding:10px 16px;border-radius:9px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--petro)}
+.btn.primary{background:var(--petro);color:#fff}
+.btn.ghost{color:var(--petro)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:2px}
+.logo{height:44px;width:auto;display:block}
+.logo-wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.logo-wrap small{font-size:13px;color:var(--steel)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo{background:#fff;padding:6px 10px;border-radius:8px;box-sizing:content-box}}
+:root[data-theme="dark"] .logo{background:#fff;padding:6px 10px;border-radius:8px;box-sizing:content-box}
+/* Apple-laag: typografie, materialen, directe feedback */
+:root{--glass:rgba(245,248,250,.72);--glass-edge:rgba(255,255,255,.6);--shadow-s:0 1px 2px rgba(11,27,43,.05),0 2px 8px rgba(11,27,43,.04);--shadow-l:0 2px 6px rgba(11,27,43,.05),0 18px 44px -12px rgba(11,27,43,.16)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--glass:rgba(11,20,28,.7);--glass-edge:rgba(255,255,255,.06);--shadow-s:0 1px 2px rgba(0,0,0,.3);--shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55)}}
+:root[data-theme="dark"]{--glass:rgba(11,20,28,.7);--glass-edge:rgba(255,255,255,.06);--shadow-s:0 1px 2px rgba(0,0,0,.3);--shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55)}
+body{font-size:15px;line-height:1.55;letter-spacing:-.006em;font-optical-sizing:auto}
+h1{letter-spacing:-.032em;line-height:1.06;font-weight:700}
+h2{letter-spacing:-.022em;line-height:1.15}
+h3{letter-spacing:-.012em;line-height:1.3}
+.eyebrow,th,.tag,.step::before,.plan .when{letter-spacing:.07em}
+small,.muted,.hint,.legend{letter-spacing:.004em}
+/* glazen kopbalk, inhoud scrolt eronder */
+.glassbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-inline:-16px;padding:10px 16px;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--glass-edge);-webkit-mask-image:linear-gradient(#000 calc(100% - 1px),transparent)}
+/* diepte naar grootte: groot vlak dikker dan klein */
+.matrix-card,.proc{box-shadow:var(--shadow-l)}
+.role,.card,.plan div,.tbl{box-shadow:var(--shadow-s)}
+.matrix-card{border-radius:16px} .role,.card,.plan div{border-radius:14px}
+/* directe feedback bij indrukken */
+.btn,.chip{transition:transform 100ms ease-out,background-color 150ms ease-out,color 150ms ease-out;-webkit-tap-highlight-color:transparent}
+.btn:active,.chip:active{transform:scale(.97)}
+.btn{border-radius:999px;padding:10px 18px}
+@media (hover:hover){.btn.ghost:hover{background:var(--petro-soft)}.chip:hover{border-color:var(--steel)}}
+@media (prefers-reduced-motion: reduce){.btn,.chip{transition:none}.btn:active,.chip:active{transform:none}}
+@media (prefers-reduced-transparency: reduce){.glassbar{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast: more){.glassbar{background:var(--paper);border-bottom-color:var(--ink)}.role,.card,.tbl,.matrix-card{border-color:var(--ink)}}
+.wrap{grid-template-columns:minmax(0,1fr)} .wrap>*,section{min-width:0}
+</style>
+<style>html,body{margin:0} img{max-width:100%}</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top glassbar">
+    <div class="logo-wrap"><img class="logo" src="/petroshift-logo-header.png" alt="PetroShift" width="532" height="132"><small>ploegenrooster voor de procesindustrie</small></div>
+    <span class="eyebrow">Chemie · raffinage · terminals · energie</span>
+  </header>
+
+  <section class="hero">
+    <h1>Een tekort op de nachtdienst zie je voordat de ploeg overdraagt.</h1>
+    <p class="lead">PetroShift zet rooster, verlof, opkomst en kwalificaties voor 5-ploegendiensten in één overzicht. De ploegleider regelt een gat in de bezetting in een paar klikken, zonder Excel, WhatsApp-groep of belrondje.</p>
+
+    <div class="matrix-card" aria-label="Voorbeeld van de roostermatrix">
+      <div class="matrix-scroll">
+        <table class="m">
+          <thead>
+            <tr><th style="text-align:left">Ploeg C · positie</th><th>ma 12</th><th>di 13</th><th>wo 14</th><th>do 15</th><th>vr 16</th><th>za 17</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="name">R. de Vries <span>· buitenoperator</span></td><td class="c O">O</td><td class="c O">O</td><td class="c M">M</td><td class="c M">M</td><td class="c N">N</td><td class="c N">N</td></tr>
+            <tr><td class="name">S. Yilmaz <span>· panel</span></td><td class="c O">O</td><td class="c O">O</td><td class="c M">M</td><td class="c M">M</td><td class="c V">V</td><td class="c V">V</td></tr>
+            <tr><td class="name">M. Bakker <span>· buitenoperator</span></td><td class="c O">O</td><td class="c Z">Z</td><td class="c M">M</td><td class="c M">M</td><td class="c N">N</td><td class="c N">N</td></tr>
+            <tr><td class="name">J. Peeters <span>· panel</span></td><td class="c O">O</td><td class="c O">O</td><td class="c M">M</td><td class="c M">M</td><td class="c N">N</td><td class="c N op">N</td></tr>
+            <tr class="sum"><td class="lbl">Bezetting / minimum</td><td>4 / 3</td><td>3 / 3</td><td>4 / 3</td><td>4 / 3</td><td class="bad">2 / 3</td><td>3 / 3</td></tr>
+            <tr class="sum"><td class="lbl">Tekort / teveel</td><td class="good">+1</td><td>0</td><td class="good">+1</td><td class="good">+1</td><td class="bad">−1</td><td>0</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="legend">
+        <span><b class="c O">O</b> ochtend</span><span><b class="c M">M</b> middag</span><span><b class="c N">N</b> nacht</span><span><b class="c V">V</b> verlof</span><span><b class="c Z">Z</b> ziek</span>
+      </div>
+      <p class="hint"><span>→</span><span><b>Vrijdagnacht één panel-operator te weinig.</b> PetroShift stelt opkomers voor uit de vrije ploegen, gerangschikt op beschikbaarheid, rusttijd volgens de Arbeidstijdenwet en overwerkuren tot nu toe. De PTL kiest, de collega krijgt een melding en het rooster is bijgewerkt.</span></p>
+      <p class="hint" style="font-size:12px"><span></span><span>Voorbeeld met fictieve namen.</span></p>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:18px">
+    <h2>Wat verandert er op de vloer</h2>
+    <div class="pains">
+      <div class="pain">
+        <p class="was">Nu: een PTL belt een lijst af en houdt de rusttijden in zijn hoofd bij.</p>
+        <h3>Opkomst regelen</h3>
+        <p>Een gerangschikte kandidatenlijst (groen, oranje, rood). Een harde blokkade als iemand de ATW-rusttijd zou overschrijden. Collega's kunnen zich ook zelf aanmelden voor een open dienst.</p>
+      </div>
+      <div class="pain">
+        <p class="was">Nu: verlof goedkeuren zonder te zien wat het met de bezetting doet.</p>
+        <h3>Verlof beoordelen</h3>
+        <p>Bij elke aanvraag staat de bezetting van die dag in beeld. Ruilen, vervangers en permanente ploegwissels lopen via dezelfde goedkeuring.</p>
+      </div>
+      <div class="pain">
+        <p class="was">Nu: wie mag welk panel draaien staat in een ander bestand dan het rooster.</p>
+        <h3>Indeling per positie</h3>
+        <p>Skills en kwalificaties per medewerker, met geldigheidsdatum. Een automatische indeling bezet zoveel mogelijk posities per installatie.</p>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:18px">
+    <div style="display:grid;gap:6px">
+      <span class="eyebrow">De twee drukste periodes van het jaar</span>
+      <h2>Stops en vakanties plan je in concept, en publiceer je pas als het klopt</h2>
+    </div>
+    <div class="roles">
+      <div class="role" style="gap:12px">
+        <span class="tag">Stoprooster</span>
+        <h3>Een onderhoudsstop naast het ploegrooster</h3>
+        <ul>
+          <li>Maak een stopperiode aan, bijvoorbeeld "TA-stop najaar", en kies de deelnemers uit alle ploegen</li>
+          <li>Geef iedereen per dag een blok: <span class="c">DD</span> dagdienst, <span class="c">O</span> ochtend of <span class="c">M</span> middag, met bloktijden die u zelf instelt</li>
+          <li>Bij publiceren gaan de deelnemers uit hun ploegrooster. Heropent u de stop, dan keren ze direct terug</li>
+          <li>Na afloop vult u de werkelijke begin- en eindtijden in. De overuren ten opzichte van de referentie worden als overwerk geboekt en komen in de rapporten</li>
+          <li>Operators zien hun stopdiensten in de app onder "Mijn stopdiensten"</li>
+        </ul>
+      </div>
+      <div class="role" style="gap:12px">
+        <span class="tag">Vakantierooster</span>
+        <h3>De zomer doorgerekend voordat hij begint</h3>
+        <ul>
+          <li>Stel per vakantieperiode de minimale bezetting, verplichte rollen en het maximum aantal opkomstdagen per persoon in</li>
+          <li>"Analyseren" toont per dag en dienst of het klopt, en welke posities of rollen ontbreken</li>
+          <li>"Automatisch aanvullen" vult tekorten met opkomst- en schuifdagen in een verhouding die u kiest, binnen de ATW-rusttijden</li>
+          <li>De verdeling per persoon laat zien of de extra diensten eerlijk over de ploegen verdeeld zijn</li>
+          <li>Alles blijft concept tot u publiceert. Wie inmiddels verlof heeft, wordt dan overgeslagen, met de reden erbij</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="display:grid;gap:18px">
+    <h2>Voor iedereen in de ploeg</h2>
+    <div class="roles">
+      <div class="role">
+        <span class="tag">Operator</span>
+        <ul>
+          <li>Eigen rooster op telefoon en in Outlook, Google of Apple Agenda</li>
+          <li>Verlof aanvragen, diensten ruilen, zelf aanmelden voor opkomst</li>
+          <li>Ziet wie hem aflost en hoeveel verlof er nog staat</li>
+        </ul>
+      </div>
+      <div class="role">
+        <span class="tag">PTL / ploegleider</span>
+        <ul>
+          <li>Tekort/teveel per dag direct zichtbaar in de matrix</li>
+          <li>Opkomer of vervanger regelen met rustcontrole</li>
+          <li>Ruilen en permanente ploegwissels goedkeuren</li>
+        </ul>
+      </div>
+      <div class="role">
+        <span class="tag">Afdeling en HR</span>
+        <ul>
+          <li>Elk ploegenpatroon, bijvoorbeeld 5-ploegen 2-2-2</li>
+          <li>Rapportages over bezetting, verzuim en overwerk</li>
+          <li>Controlepunt naast Workday voor verlofsaldi</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="proc">
+    <h2>Klaar voor inkoop, IT en de OR</h2>
+    <p>Wij weten dat een nieuw systeem op een site eerst langs IT-security, privacy en inkoop moet. Daarom hebben we het dossier al voorbereid.</p>
+    <ul>
+      <li>Vooraf ingevulde beveiligingsvragenlijst</li>
+      <li>SLA met beschikbaarheid, reactie- en hersteltijden</li>
+      <li>Register van verwerkingen (AVG art. 30)</li>
+      <li>Informatiebeveiligingsbeleid en incidentprocedure</li>
+      <li>Tweestapsverificatie, begrensde inlogpogingen en auditlog</li>
+      <li>Medewerkers kunnen eigen gegevens exporteren en laten verwijderen</li>
+    </ul>
+    <p class="note">We claimen geen certificeringen die we niet hebben. U krijgt het dossier zoals het is, zodat u zelf kunt toetsen.</p>
+  </section>
+
+  <section style="display:grid;gap:18px">
+    <h2>Zo begint u</h2>
+    <div class="steps">
+      <div class="step"><h3>Demo van 30 minuten</h3><p>Op locatie of online, met uw eigen ploegenpatroon.</p></div>
+      <div class="step"><h3>Eén afdeling proef laten draaien</h3><p>Start met één ploegendienst naast het huidige rooster. De inrichting loopt via een wizard met een sjabloon voor de procesindustrie.</p></div>
+      <div class="step"><h3>Samen beslissen</h3><p>Na de proef kiest u zelf of u uitbreidt. Prijs op aanvraag, afgestemd op het aantal medewerkers.</p></div>
+    </div>
+  </section>
+
+  <footer class="cta">
+    <div style="display:grid;gap:4px">
+      <h3>Plan een demo met PetroShift</h3>
+      <p style="color:var(--steel);font-size:14px">Nederlandstalig, gemaakt voor 5-ploegendiensten in de procesindustrie.</p>
+    </div>
+    <div class="links">
+      <a class="btn primary" href="https://petroshift.nl" target="_blank" rel="noopener">petroshift.nl</a>
+      <a class="btn ghost" href="prijzen.html">Bekijk de prijzen</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
