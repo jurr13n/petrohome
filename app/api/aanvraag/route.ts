@@ -1,12 +1,21 @@
 import { NextResponse } from 'next/server';
+import { clean, clientKey, EMAIL_RE, readJson, sameOrigin } from '../../lib/chat/http';
+import { getStore } from '../../lib/chat/store';
 
-const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+// Tegen spam: per IP en voor de hele site per uur begrensd, zodat een script
+// de mailbox niet kan laten vollopen of het Resend-tegoed opmaken.
+const PER_IP_PER_UUR = 5;
+const TOTAAL_PER_UUR = 40;
 
 const COPY = {
   nl: {
     validation: 'Naam en een geldig e-mailadres zijn verplicht',
     notConfigured: 'E-mail is nog niet geconfigureerd',
     sendFailed: 'Versturen is mislukt',
+    rate: 'Te veel aanvragen. Probeer het later opnieuw of mail naar info@petroshift.nl',
     subject: (bedrijf: string) => `Aanvraag via website${bedrijf ? ' – ' + bedrijf : ''}`,
     labels: { naam: 'Naam', bedrijf: 'Bedrijf', email: 'E-mail', telefoon: 'Telefoon' },
   },
@@ -14,20 +23,19 @@ const COPY = {
     validation: 'Name and a valid email address are required',
     notConfigured: 'Email is not configured yet',
     sendFailed: 'Sending failed',
+    rate: 'Too many requests. Please try again later or email info@petroshift.nl',
     subject: (bedrijf: string) => `Website inquiry${bedrijf ? ' – ' + bedrijf : ''}`,
     labels: { naam: 'Name', bedrijf: 'Company', email: 'Email', telefoon: 'Phone' },
   },
 } as const;
 
-function clean(v: unknown, max: number): string {
-  return typeof v === 'string' ? v.trim().slice(0, max) : '';
-}
-
 export async function POST(req: Request) {
-  let body: Record<string, unknown>;
-  try {
-    body = await req.json();
-  } catch {
+  // Alleen vanaf onze eigen site; readJson weigert ook te grote of niet-JSON-bodies.
+  if (!sameOrigin(req)) {
+    return NextResponse.json({ ok: false, error: 'Ongeldig verzoek / Invalid request' }, { status: 403 });
+  }
+  const body = await readJson(req);
+  if (!body) {
     return NextResponse.json({ ok: false, error: 'Ongeldig verzoek / Invalid request' }, { status: 400 });
   }
 
@@ -47,6 +55,16 @@ export async function POST(req: Request) {
 
   if (!naam || !EMAIL_RE.test(email)) {
     return NextResponse.json({ ok: false, error: t.validation }, { status: 400 });
+  }
+
+  // Zonder opslag (lokaal zonder Redis) geen limiet; in productie is Redis er altijd.
+  const store = getStore();
+  if (store) {
+    const perIp = await store.hit(`rl:aanvraag:${clientKey(req)}`, 3600);
+    const totaal = await store.hit('rl:aanvraag:totaal', 3600);
+    if (perIp > PER_IP_PER_UUR || totaal > TOTAAL_PER_UUR) {
+      return NextResponse.json({ ok: false, error: t.rate }, { status: 429 });
+    }
   }
 
   const apiKey = process.env.RESEND_API_KEY;

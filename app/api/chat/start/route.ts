@@ -24,6 +24,8 @@ async function handlePOST(req: Request) {
 
   const ip = clientKey(req);
   if ((await store.hit(`rl:start:${ip}`, 3600)) > 5) return json({ ok: false, error: 'rate' }, 429);
+  // Ook een plafond voor de hele site, tegen spam vanaf veel IP-adressen tegelijk.
+  if ((await store.hit('rl:start:totaal', 3600)) > 60) return json({ ok: false, error: 'rate' }, 429);
 
   const token = newToken();
   const { conv, msg } = await store.createConv(
