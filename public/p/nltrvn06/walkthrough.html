@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Rondleiding door PetroShift: wat je als medewerker en als ploegleider in de app ziet en doet.">
+<title>Rondleiding PetroShift</title>
+<link rel="icon" href="/icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+:root{
+  --paper:#F5F8FA; --sheet:#FFFFFF; --ink:#0B1B2B; --steel:#51616F; --line:#D9E2E9;
+  --petro:#0A86BC; --petro-soft:#E3F2F9; --ok:#17875C; --ok-soft:#E2F4EC;
+  --glass:rgba(245,248,250,.72); --glass-edge:rgba(255,255,255,.6);
+  --shadow-s:0 1px 2px rgba(11,27,43,.05),0 2px 8px rgba(11,27,43,.04);
+  --shadow-l:0 2px 6px rgba(11,27,43,.05),0 18px 44px -12px rgba(11,27,43,.16);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
+    --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F;
+    --glass:rgba(11,20,28,.7); --glass-edge:rgba(255,255,255,.06);
+    --shadow-s:0 1px 2px rgba(0,0,0,.3); --shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
+  --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F;
+  --glass:rgba(11,20,28,.7); --glass-edge:rgba(255,255,255,.06);
+  --shadow-s:0 1px 2px rgba(0,0,0,.3); --shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:var(--paper);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;letter-spacing:-.006em;padding-inline:16px;padding-block:0 56px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:960px;margin:0 auto;display:grid;gap:44px;grid-template-columns:minmax(0,1fr)}
+.wrap>*,section{min-width:0}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;text-wrap:balance}
+h1{font-size:clamp(30px,5vw,44px);font-weight:700;letter-spacing:-.032em;line-height:1.06}
+h2{font-size:26px;font-weight:600;letter-spacing:-.022em;line-height:1.15}
+h3{font-size:19px;font-weight:600;letter-spacing:-.012em;line-height:1.3}
+p{margin:0}
+.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--petro)}
+.lead{font-size:17px;color:var(--steel);max-width:62ch}
+.muted{color:var(--steel)}
+
+.glassbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-inline:-16px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--glass-edge)}
+.logo{height:40px;width:auto;display:block}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo{background:#fff;padding:5px 9px;border-radius:8px;box-sizing:content-box}}
+:root[data-theme="dark"] .logo{background:#fff;padding:5px 9px;border-radius:8px;box-sizing:content-box}
+
+.hero{display:grid;gap:18px;padding-top:28px}
+.toc{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;box-shadow:var(--shadow-s);transition:transform 100ms ease-out,border-color 150ms ease-out;-webkit-tap-highlight-color:transparent}
+.chip:active{transform:scale(.97)}
+.chip b{color:var(--petro);font-weight:600;font-variant-numeric:tabular-nums}
+@media (hover:hover){.chip:hover{border-color:var(--petro)}}
+
+.part{display:grid;gap:10px;padding-top:12px;border-top:2px solid var(--ink)}
+.part p{max-width:62ch}
+
+.feature{display:grid;gap:18px;scroll-margin-top:80px}
+.feature .text{display:grid;gap:10px;align-content:start;max-width:64ch}
+.feature .num{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--petro)}
+.feature ul{margin:0;padding-left:20px;display:grid;gap:5px}
+.feature li::marker{color:var(--petro)}
+.tip{display:flex;gap:10px;align-items:flex-start;background:var(--petro-soft);border-radius:12px;padding:12px 14px;font-size:14px}
+.tip b{white-space:nowrap}
+
+figure{margin:0;display:grid;gap:8px}
+figure a{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-l);background:var(--sheet);transition:transform 100ms ease-out}
+figure a:active{transform:scale(.995)}
+figure img{display:block;width:100%;height:auto}
+figcaption{font-size:13px;color:var(--steel)}
+.phones{display:grid;grid-template-columns:repeat(2,minmax(0,260px));gap:16px;justify-content:start}
+.phones a{border-radius:28px}
+
+.extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
+.card{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:6px;align-content:start;box-shadow:var(--shadow-s)}
+.card h3{font-size:17px}
+.card p{font-size:14px;color:var(--steel)}
+
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:24px;font-size:14px}
+footer .links{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--petro);color:var(--petro);transition:transform 100ms ease-out,background-color 150ms ease-out;-webkit-tap-highlight-color:transparent}
+.btn.primary{background:var(--petro);color:#fff}
+.btn:active{transform:scale(.97)}
+@media (hover:hover){.btn:not(.primary):hover{background:var(--petro-soft)}}
+a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offset:2px}
+
+@media (min-width:860px){
+  .feature.split{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
+  .feature.split.flip .text{order:2}
+}
+@media (prefers-reduced-motion: reduce){.chip,.btn,figure a{transition:none}.chip:active,.btn:active,figure a:active{transform:none}html{scroll-behavior:auto}}
+@media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
+@media (prefers-reduced-transparency: reduce){.glassbar{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast: more){.glassbar{background:var(--paper);border-bottom-color:var(--ink)}.card,figure a,.chip{border-color:var(--ink)}}
+@media print{.glassbar{position:static}.toc{display:none}figure a{box-shadow:none}.feature{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="glassbar">
+    <img class="logo" src="/petroshift-logo-header.png" alt="PetroShift" width="532" height="132">
+    <span class="eyebrow">Rondleiding</span>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">Zo werkt PetroShift</span>
+    <h1>Je rooster, je aanvragen en de bezetting van de ploeg, op één plek.</h1>
+    <p class="lead">Een korte rondleiding langs wat je in PetroShift ziet en doet. Eerst wat iedereen gebruikt, daarna wat de ploegleider (PTL) extra heeft. Klik op een afbeelding om hem groot te openen.</p>
+    <nav class="toc" aria-label="Inhoud">
+      <a class="chip" href="#dashboard"><b>1</b> Dashboard</a>
+      <a class="chip" href="#rooster"><b>2</b> Rooster</a>
+      <a class="chip" href="#telefoon"><b>3</b> Op je telefoon</a>
+      <a class="chip" href="#aanvragen"><b>4</b> Aanvragen</a>
+      <a class="chip" href="#meldingen"><b>5</b> Meldingen</a>
+      <a class="chip" href="#profiel"><b>6</b> Profiel en verlof</a>
+      <a class="chip" href="#indeling"><b>7</b> Indeling</a>
+      <a class="chip" href="#vakantierooster"><b>8</b> Vakantierooster</a>
+      <a class="chip" href="#team"><b>9</b> Team</a>
+      <a class="chip" href="#meer"><b>10</b> Verder</a>
+    </nav>
+  </section>
+
+  <section class="part">
+    <span class="eyebrow">Deel 1</span>
+    <h2>Voor iedereen</h2>
+    <p class="muted">Dit ziet elke medewerker na het inloggen, met je werkaccount of met e-mail en wachtwoord.</p>
+  </section>
+
+  <section class="feature" id="dashboard">
+    <div class="text">
+      <span class="num">1 · Mijn dashboard</span>
+      <h3>In één oogopslag hoe vandaag eruitziet</h3>
+      <ul>
+        <li><b>Vandaag</b>: per dienst hoeveel mensen er staan tegen het minimum, en welke ploeg hem draait.</li>
+        <li><b>Mijn overzicht</b>: je opkomstdagen, gewerkte feestdagen en hoeveel verlof je nog hebt.</li>
+        <li><b>Wie lost jou af</b>: je volgende dienst en welke ploeg of collega je aflost.</li>
+        <li><b>Jouw komende diensten</b> en <b>open diensten</b> waarvoor je je kunt aanmelden.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/dashboard.webp"><img src="walkthrough/dashboard.webp" alt="Dashboard met de bezetting van vandaag, mijn overzicht en komende diensten" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature" id="rooster">
+    <div class="text">
+      <span class="num">2 · Mijn rooster</span>
+      <h3>Het rooster van je ploeg, zoals je het gewend bent</h3>
+      <ul>
+        <li>Per dag je dienst: <b>o</b> ochtend, <b>m</b> middag, <b>n</b> nacht. Verlof, ziekte en cursus hebben een eigen code; de <b>Legenda</b> legt ze uit.</li>
+        <li>Onderaan zie je per dag de bezetting en of er een <b>tekort of teveel</b> is.</li>
+        <li>Rechts je tellers: saldo, verlof, opkomst, overwerk en gewerkte feestdagen.</li>
+        <li>Met <b>Los venster</b> of <b>Fullscreen</b> zet je het rooster op een groot scherm in de controlekamer.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/rooster.webp"><img src="walkthrough/rooster.webp" alt="Roostermatrix met diensten per medewerker en de bezetting per dag" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature split" id="telefoon">
+    <div class="text">
+      <span class="num">3 · Op je telefoon</span>
+      <h3>Alles werkt ook op je telefoon</h3>
+      <p>Onderin staan de vijf onderdelen die je het meest gebruikt. Het rooster scrolt zijwaarts, bovenaan zie je per dag of de bezetting klopt.</p>
+      <div class="tip"><b>Tip</b><span>Zet PetroShift op je beginscherm: open de app in Safari (iPhone) of Chrome (Android) en kies "Zet op beginscherm". Dan opent hij als een gewone app.</span></div>
+    </div>
+    <div class="phones">
+      <figure><a href="walkthrough/mobiel-dashboard.webp"><img src="walkthrough/mobiel-dashboard.webp" alt="Dashboard op een telefoon" width="640" height="1385" loading="lazy" decoding="async"></a></figure>
+      <figure><a href="walkthrough/mobiel-rooster.webp"><img src="walkthrough/mobiel-rooster.webp" alt="Rooster op een telefoon" width="640" height="1385" loading="lazy" decoding="async"></a></figure>
+    </div>
+  </section>
+
+  <section class="feature" id="aanvragen">
+    <div class="text">
+      <span class="num">4 · Aanvragen</span>
+      <h3>Vervanger zoeken of een dienst ruilen</h3>
+      <ul>
+        <li><b>Vervanger zoeken</b>: kies de datum en dienst, eventueel welk kantje, en een reden. De PTL krijgt het meteen te zien en de juiste collega's worden gevraagd.</li>
+        <li><b>Dienst ruilen</b>: stel een ruil voor met een collega. Die bevestigt, daarna keurt de PTL goed.</li>
+        <li>Verlof vraag je aan in je rooster: klik op een dag en kies <b>Verlof aanvragen</b>. Onder <b>Mijn aanvragen</b> zie je de stand van alles wat je hebt ingediend.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/aanvraag.webp"><img src="walkthrough/aanvraag.webp" alt="Formulier vervanger zoeken met datum, dienst, kantje en reden" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature" id="meldingen">
+    <div class="text">
+      <span class="num">5 · Meldingen</span>
+      <h3>Je hoort het meteen als er iets verandert</h3>
+      <ul>
+        <li>Een nieuwe open dienst, een goedgekeurde aanvraag of een wijziging in de indeling komt hier binnen, per dag gegroepeerd.</li>
+        <li>Filter op <b>Ongelezen</b> of <b>Open diensten</b>. Voor een open dienst meld je je aan via het dashboard.</li>
+        <li>In je profiel kies je per soort of je ook een pushmelding, e-mail of WhatsApp-bericht wilt.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/meldingen.webp"><img src="walkthrough/meldingen.webp" alt="Meldingen met oproepen voor open diensten" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature split" id="profiel">
+    <div class="text">
+      <span class="num">6 · Profiel en verlof</span>
+      <h3>Je verlofsaldo en je account</h3>
+      <ul>
+        <li>Zie hoeveel verlof je nog hebt en hoeveel je dit jaar hebt opgenomen.</li>
+        <li>Wijkt het af van je HR-systeem? Vul daar het actuele saldo in en PetroShift rekent vanaf nu mee.</li>
+        <li>Zet <b>tweestapsverificatie</b> aan met een authenticator-app, en wijzig hier je wachtwoord.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/profiel.webp"><img src="walkthrough/profiel.webp" alt="Profiel met verlofsaldo, app installeren, wachtwoord en tweestapsverificatie" width="1320" height="1290" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="part">
+    <span class="eyebrow">Deel 2</span>
+    <h2>Voor de ploegleider</h2>
+    <p class="muted">Als PTL of aPTL heb je daarnaast de indeling, het vakantierooster en het overzicht van je ploeg.</p>
+  </section>
+
+  <section class="feature" id="indeling">
+    <div class="text">
+      <span class="num">7 · Indeling</span>
+      <h3>De hele werkgang in één scherm ingedeeld</h3>
+      <ul>
+        <li>Per dienst wie op welk kantje staat. Klik bij een positie op <b>toevoegen</b> en kies iemand uit wie er die dienst is.</li>
+        <li><b>Automatisch invullen</b> doet een voorstel op basis van kwalificaties (de sterren) en de bezettingsregels. Jij controleert en slaat op.</li>
+        <li>Medewerkers zien daarna op hun dashboard waar ze staan, en krijgen een melding als dat verandert.</li>
+        <li>Met <b>Afdrukken</b> heb je de indeling op papier voor de overdracht.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/indeling.webp"><img src="walkthrough/indeling.webp" alt="Indeling van een werkgang met per kantje een medewerker en kwalificatiesterren" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature" id="vakantierooster">
+    <div class="text">
+      <span class="num">8 · Vakantierooster</span>
+      <h3>De vakantieperiode rond zonder belrondje</h3>
+      <ul>
+        <li>Maak een periode aan, bijvoorbeeld de zomer, en klik <b>Analyseren</b>: je ziet per dag en dienst waar een tekort is.</li>
+        <li><b>Automatisch aanvullen</b> zoekt opkomers en schuifdagen, eerlijk verdeeld en binnen de rust- en arbeidstijdregels. Kies zelf de verhouding tussen opkomen en schuiven.</li>
+        <li>Alles blijft een <b>concept</b> tot jij publiceert. Pas dan komt het in het rooster en krijgen de collega's bericht.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/vakantierooster.webp"><img src="walkthrough/vakantierooster.webp" alt="Analyse van een vakantieperiode met per dienst het tekort" width="1600" height="427" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature" id="team">
+    <div class="text">
+      <span class="num">9 · Team</span>
+      <h3>Wie er is en wat iedereen kan</h3>
+      <ul>
+        <li>Per ploeg de medewerkers, met of ze vandaag werken, vrij, met verlof of ziek zijn.</li>
+        <li>De sterren geven per kantje het niveau aan. Zo zie je snel wie een Panel kan overnemen.</li>
+        <li>Zoek op naam, of wissel tussen lijst, tegels en tabel.</li>
+      </ul>
+    </div>
+    <figure>
+      <a href="walkthrough/team.webp"><img src="walkthrough/team.webp" alt="Teamoverzicht met per medewerker de status van vandaag en kwalificaties" width="1600" height="1012" loading="lazy" decoding="async"></a>
+    </figure>
+  </section>
+
+  <section class="feature" id="meer">
+    <div class="text">
+      <span class="num">10 · Verder</span>
+      <h3>Wat er nog meer in zit</h3>
+    </div>
+    <div class="extra">
+      <div class="card"><h3>Stop en evenementen</h3><p>Plan een turnaround of stop met deelnemers en uren, en vergelijk achteraf gepland met gewerkt.</p></div>
+      <div class="card"><h3>Rapporten</h3><p>Verzuim, verlof, overwerk en bezetting per maand, en per medewerker hoe vaak iemand op welk kantje stond. Alles te exporteren naar Excel.</p></div>
+      <div class="card"><h3>Verlof controleren in HR</h3><p>Een afvinklijst van goedgekeurd verlof dat nog in het HR-systeem (bijvoorbeeld Workday) gecontroleerd moet worden.</p></div>
+      <div class="card"><h3>Assistent</h3><p>Stel een vraag over het rooster in gewone taal. Optioneel, per bedrijf aan of uit te zetten.</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <p class="muted">Schermafbeeldingen uit een demo-omgeving met fictieve medewerkers. Wat je ziet hangt af van je rol en de onderdelen die je bedrijf gebruikt.</p>
+    <div class="links">
+      <a class="btn" href="/p/nltrvn06/petroshift.html">Over PetroShift</a>
+      <a class="btn primary" href="/#demo">Demo aanvragen</a>
+    </div>
+  </footer>
+</div>
+</body>
+</html>
