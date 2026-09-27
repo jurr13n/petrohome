@@ -57,7 +57,8 @@ p{margin:0}
 
 /* elk onderdeel als glass-card, zoals de kaarten in de app */
 .feature{display:grid;gap:20px;scroll-margin-top:84px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
-.feature .text{display:grid;gap:10px;align-content:start;max-width:66ch}
+.feature .text{display:grid;gap:10px;align-content:start}
+.feature .text>p,.feature .text>ul,.feature .text>h3{max-width:66ch}
 .feature .num{display:flex;align-items:center;gap:8px}
 .feature .num i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--sky-soft);border:1px solid var(--sky-edge);color:var(--sky-text);font:600 12px/1 "JetBrains Mono",monospace;letter-spacing:0}
 .feature ul{margin:0;padding-left:20px;display:grid;gap:6px}
@@ -86,6 +87,24 @@ footer .links{display:flex;flex-wrap:wrap;gap:10px}
 @media (hover:hover){.btn.primary:hover{filter:brightness(1.05)}.btn.ghost:hover{background:var(--muted-soft)}}
 a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 
+/* sterktes, regels en meldingen */
+.levels{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.level{background:var(--muted-soft);border:1px solid var(--border);border-radius:12px;padding:12px 14px;display:grid;gap:4px;align-content:start}
+.level .stars{color:#F59E0B;letter-spacing:2px;font-size:16px;line-height:1}
+.level .stars s{color:#CBD5E1;text-decoration:none}
+.level b{font-family:Outfit,sans-serif;font-size:16px}
+.level span{font-size:13px;color:var(--muted)}
+.level.counts{background:rgba(16,185,129,.08);border-color:rgba(16,185,129,.3)}
+.level.counts em{font-style:normal;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:#047857}
+.dots{display:flex;flex-wrap:wrap;gap:8px 18px;font-size:14px}
+.dots span{display:inline-flex;align-items:center;gap:7px}
+.dots i{width:10px;height:10px;border-radius:999px;display:inline-block}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:10px}
+.rule{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding:11px 14px;border:1px solid var(--border);border-radius:12px;background:var(--muted-soft);font-size:14px}
+.rule b{font:600 14px/1.2 "JetBrains Mono",monospace;color:var(--sky-text);white-space:nowrap}
+.alert{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:12px;font-size:14px;background:rgba(244,63,94,.08);border:1px solid rgba(244,63,94,.3);color:#BE123C}
+.alert code{font:500 13px/1.5 "JetBrains Mono",monospace;color:#9F1239}
+.subhead{font-family:Outfit,sans-serif;font-weight:700;font-size:16px;margin-top:6px}
 @media (min-width:860px){
   .feature.split{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
 }
@@ -119,10 +138,12 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:
       <a class="chip" href="#meldingen"><b>5</b> Meldingen</a>
       <a class="chip" href="#profiel"><b>6</b> Profiel en verlof</a>
       <a class="chip" href="#indeling"><b>7</b> Indeling</a>
-      <a class="chip" href="#vakantierooster"><b>8</b> Vakantierooster</a>
-      <a class="chip" href="#team"><b>9</b> Team</a>
-      <a class="chip" href="#stop"><b>10</b> Stop en turnaround</a>
-      <a class="chip" href="#meer"><b>11</b> Verder</a>
+      <a class="chip" href="#kandidaten"><b>8</b> Opkomers en vervangers</a>
+      <a class="chip" href="#atw"><b>9</b> Arbeidstijdenwet</a>
+      <a class="chip" href="#vakantierooster"><b>10</b> Vakantierooster</a>
+      <a class="chip" href="#team"><b>11</b> Team</a>
+      <a class="chip" href="#stop"><b>12</b> Stop en turnaround</a>
+      <a class="chip" href="#meer"><b>13</b> Verder</a>
     </nav>
   </section>
 
@@ -239,15 +260,76 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:
         <li>Medewerkers zien daarna op hun dashboard waar ze staan, en krijgen een melding als dat verandert.</li>
         <li>Met <b>Afdrukken</b> heb je de indeling op papier voor de overdracht.</li>
       </ul>
+      <p class="subhead">Sterktes: wat de sterren betekenen</p>
+      <p class="muted">Iedere medewerker heeft per kantje (bijvoorbeeld SRU Panel of HDS Buiten) een niveau van 1 tot 4 sterren. De PTL houdt die sterktes zelf bij in het profiel van de medewerker.</p>
+      <div class="levels">
+        <div class="level"><span class="stars">★<s>★★★</s></span><b>Loopt mee</b><span>Extra persoon, telt niet mee voor de bezetting en wordt niet als opkomer voorgesteld.</span></div>
+        <div class="level"><span class="stars">★★<s>★★</s></span><b>In opleiding</b><span>Extra persoon. Op een Panel telt hij wel mee als er een niveau 4 op een Panel staat.</span></div>
+        <div class="level counts"><span class="stars">★★★<s>★</s></span><b>Zelfstandig</b><span>Dekt het kantje af en telt mee voor de minimale bezetting.</span><em>Telt mee</em></div>
+        <div class="level counts"><span class="stars">★★★★</span><b>Senior / specialist</b><span>Dekt het kantje af en kan een collega in opleiding op het Panel begeleiden.</span><em>Telt mee</em></div>
+      </div>
+      <p class="muted">Deze regels gelden overal: dashboard, rooster, indeling, vakantierooster en het zoeken naar invallers. De bedrijfsbeheerder kan ze per bedrijf aanpassen onder Beheer &gt; Bezettingsregels.</p>
     </div>
     <figure>
       <a href="walkthrough/indeling.webp"><img src="walkthrough/indeling.webp" alt="Indeling van een werkgang met per kantje een medewerker en kwalificatiesterren" width="1600" height="1012" loading="lazy" decoding="async"></a>
     </figure>
   </section>
 
+  <section class="feature" id="kandidaten">
+    <div class="text">
+      <span class="num"><i>8</i><span class="micro">Opkomers en vervangers</span></span>
+      <h3>De app zoekt zelf wie er kan invallen</h3>
+      <p>Is er een tekort of meldt iemand zich af, klik dan op de dienst en op <b>Zoek kandidaten</b>. PetroShift loopt alle collega's langs en toont direct wie er in aanmerking komt, voor de hele dienst of voor één kantje.</p>
+      <ul>
+        <li>Wie die dag vrij is: geen eigen dienst, geen verlof, niet ziek of op cursus.</li>
+        <li>Wie het kantje aankan: het juiste niveau (de sterren) voor die plek.</li>
+        <li>Wie genoeg rust heeft en binnen de <b>Arbeidstijdenwet</b> blijft.</li>
+        <li>Per persoon zie je de rusturen voor de dienst en het overwerk van deze maand.</li>
+      </ul>
+      <div class="dots">
+        <span><i style="background:#10B981"></i>Geschikt</span>
+        <span><i style="background:#F59E0B"></i>Twijfel, met de reden erbij</span>
+        <span><i style="background:#F43F5E"></i>Niet toegestaan, met de reden; niet te kiezen</span>
+      </div>
+      <ul>
+        <li>De lijst staat op volgorde: eerst wie geschikt is, en daarbinnen wie deze maand het minst heeft overgewerkt. Zo wordt het extra werk eerlijk verdeeld.</li>
+        <li>Kies <b>Vraag interesse</b> (de collega krijgt een melding en e-mail) of <b>Direct toevoegen</b>.</li>
+        <li>Lukt het niet binnen de ploeg? Met <b>Oproep doen</b> krijgen de roostervrije ploegen een seintje dat er iemand nodig is.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="feature" id="atw">
+    <div class="text">
+      <span class="num"><i>9</i><span class="micro">Arbeidstijdenwet-controle</span></span>
+      <h3>Geen dienst die niet mag</h3>
+      <p>Bij elke wijziging die iemand een dienst geeft, rekent PetroShift na of dat binnen de Arbeidstijdenwet blijft. Dat gebeurt in het rooster, bij opkomers en vervangers, bij een ruil, in het vakantierooster en bij het publiceren. De app telt daarbij het basisrooster, extra diensten, verlof en nog niet gepubliceerde keuzes samen.</p>
+      <p class="subhead">Wat er wordt gecontroleerd</p>
+      <div class="rules">
+        <div class="rule"><span>Rust tussen twee diensten</span><b>min. 11 uur</b></div>
+        <div class="rule"><span>Rust na een nachtdienst</span><b>min. 14 uur</b></div>
+        <div class="rule"><span>Rust na een reeks nachtdiensten</span><b>min. 46 uur</b></div>
+        <div class="rule"><span>Nachtdiensten achter elkaar</span><b>max. 7 (zomer 8)</b></div>
+        <div class="rule"><span>Werkuren in één week</span><b>max. 60 uur</b></div>
+        <div class="rule"><span>Gemiddeld over 4 weken</span><b>max. 55 u/week</b></div>
+        <div class="rule"><span>Gemiddeld over 16 weken</span><b>max. 48 u/week</b></div>
+        <div class="rule"><span>Nachtdiensten in 16 weken</span><b>max. 36</b></div>
+        <div class="rule"><span>Weekrust</span><b>36 u per 7 dagen</b></div>
+        <div class="rule"><span>Vrije zondagen per jaar</span><b>min. 13</b></div>
+      </div>
+      <p class="muted">Werkt iemand 16 of meer nachtdiensten in 16 weken, dan geldt gemiddeld max. 40 uur per week. De weekrust mag ook 72 uur per 14 dagen zijn, in blokken van minstens 32 uur. Een ochtenddienst direct na een nachtdienst kan niet.</p>
+      <p class="subhead">Wat je ziet</p>
+      <ul>
+        <li>In de kandidatenlijsten staat een ATW-punt al als waarschuwing bij de naam, zodat je het ziet voordat je kiest.</li>
+        <li>Een wijziging die de wet overtreedt, gaat niet door. De app zegt precies waarom:</li>
+      </ul>
+      <div class="alert"><span aria-hidden="true">⚠</span><code>Slechts 8u rust na een nachtdienst (min. 14u) — Arbeidstijdenwet</code></div>
+    </div>
+  </section>
+
   <section class="feature" id="vakantierooster">
     <div class="text">
-      <span class="num"><i>8</i><span class="micro">Vakantierooster</span></span>
+      <span class="num"><i>10</i><span class="micro">Vakantierooster</span></span>
       <h3>De vakantieperiode rond zonder belrondje</h3>
       <ul>
         <li>Maak een periode aan, bijvoorbeeld de zomer, en klik <b>Analyseren</b>: je ziet per dag en dienst waar een tekort is.</li>
@@ -262,7 +344,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:
 
   <section class="feature" id="team">
     <div class="text">
-      <span class="num"><i>9</i><span class="micro">Team</span></span>
+      <span class="num"><i>11</i><span class="micro">Team</span></span>
       <h3>Wie er is en wat iedereen kan</h3>
       <ul>
         <li>Per ploeg de medewerkers, met of ze vandaag werken, vrij, met verlof of ziek zijn.</li>
@@ -277,7 +359,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:
 
   <section class="feature" id="stop">
     <div class="text">
-      <span class="num"><i>10</i><span class="micro">Stop en turnaround</span></span>
+      <span class="num"><i>12</i><span class="micro">Stop en turnaround</span></span>
       <h3>Een stop plannen naast het gewone rooster</h3>
       <ul>
         <li>Maak een stopperiode aan en kies de <b>deelnemers</b>, per ploeg gegroepeerd.</li>
@@ -293,7 +375,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:
 
   <section class="feature" id="meer">
     <div class="text">
-      <span class="num"><i>11</i><span class="micro">Verder</span></span>
+      <span class="num"><i>13</i><span class="micro">Verder</span></span>
       <h3>Wat er nog meer in zit</h3>
     </div>
     <div class="extra">
