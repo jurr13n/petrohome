@@ -8,105 +8,119 @@
 <title>Rondleiding PetroShift</title>
 <link rel="icon" href="/icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@600;700;800&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
+/* Thema van de app (frontend/src/index.css): slate/sky, Outfit-koppen, Inter-tekst, glass-cards. */
 :root{
-  --paper:#F5F8FA; --sheet:#FFFFFF; --ink:#0B1B2B; --steel:#51616F; --line:#D9E2E9;
-  --petro:#0A86BC; --petro-soft:#E3F2F9; --ok:#17875C; --ok-soft:#E2F4EC;
-  --glass:rgba(245,248,250,.72); --glass-edge:rgba(255,255,255,.6);
-  --shadow-s:0 1px 2px rgba(11,27,43,.05),0 2px 8px rgba(11,27,43,.04);
-  --shadow-l:0 2px 6px rgba(11,27,43,.05),0 18px 44px -12px rgba(11,27,43,.16);
+  --bg:#F8FAFC; --card:rgba(255,255,255,.9); --fg:#0F172A; --muted:#64748B; --muted-soft:#EAF0F6;
+  --border:#E2E8F0; --sky:#0284C7; --sky-text:#0369A1; --sky-soft:rgba(14,165,233,.1); --sky-edge:rgba(14,165,233,.3);
+  --btn-top:#198CF0; --btn-bot:#0E79D8; --btn-glow:rgba(12,108,192,.7);
+  --glow-a:rgba(14,165,233,.08); --glow-b:rgba(168,85,247,.05);
+  --shadow:0 10px 15px -3px rgba(15,23,42,.08),0 4px 6px -4px rgba(15,23,42,.06);
+  --shadow-s:0 1px 2px rgba(15,23,42,.06);
+  --bar:rgba(248,250,252,.78);
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
     color-scheme:dark;
-    --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
-    --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F;
-    --glass:rgba(11,20,28,.7); --glass-edge:rgba(255,255,255,.06);
-    --shadow-s:0 1px 2px rgba(0,0,0,.3); --shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55);
+    --bg:#0D1016; --card:rgba(15,23,42,.8); --fg:#F1F5F9; --muted:#94A3B8; --muted-soft:#1D2839;
+    --border:#1E293B; --sky:#0DA2E7; --sky-text:#7DD3FC; --sky-soft:rgba(14,165,233,.15); --sky-edge:rgba(14,165,233,.35);
+    --glow-a:rgba(14,165,233,.10); --glow-b:rgba(168,85,247,.06);
+    --shadow:0 20px 25px -5px rgba(0,0,0,.45),0 8px 10px -6px rgba(0,0,0,.35); --shadow-s:0 1px 2px rgba(0,0,0,.4);
+    --bar:rgba(13,16,22,.78);
   }
 }
 :root[data-theme="dark"]{
   color-scheme:dark;
-  --paper:#0B141C; --sheet:#111D28; --ink:#E8EEF3; --steel:#9AABB9; --line:#22323F;
-  --petro:#3CB4E6; --petro-soft:#0F2C3B; --ok:#4FCB93; --ok-soft:#10301F;
-  --glass:rgba(11,20,28,.7); --glass-edge:rgba(255,255,255,.06);
-  --shadow-s:0 1px 2px rgba(0,0,0,.3); --shadow-l:0 2px 6px rgba(0,0,0,.3),0 18px 44px -12px rgba(0,0,0,.55);
+  --bg:#0D1016; --card:rgba(15,23,42,.8); --fg:#F1F5F9; --muted:#94A3B8; --muted-soft:#1D2839;
+  --border:#1E293B; --sky:#0DA2E7; --sky-text:#7DD3FC; --sky-soft:rgba(14,165,233,.15); --sky-edge:rgba(14,165,233,.35);
+  --glow-a:rgba(14,165,233,.10); --glow-b:rgba(168,85,247,.06);
+  --shadow:0 20px 25px -5px rgba(0,0,0,.45),0 8px 10px -6px rgba(0,0,0,.35); --shadow-s:0 1px 2px rgba(0,0,0,.4);
+  --bar:rgba(13,16,22,.78);
 }
 *{box-sizing:border-box}
 html,body{margin:0}
-body{background:var(--paper);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;letter-spacing:-.006em;padding-inline:16px;padding-block:0 56px;-webkit-font-smoothing:antialiased}
-.wrap{max-width:960px;margin:0 auto;display:grid;gap:44px;grid-template-columns:minmax(0,1fr)}
+body{background-color:var(--bg);color:var(--fg);font:15px/1.6 Inter,system-ui,sans-serif;padding-inline:16px;padding-block:0 56px;-webkit-font-smoothing:antialiased;
+  background-image:radial-gradient(1200px 600px at 100% -10%,var(--glow-a),transparent 60%),radial-gradient(900px 500px at -10% 110%,var(--glow-b),transparent 60%);background-attachment:fixed}
+.wrap{max-width:1000px;margin:0 auto;display:grid;gap:28px;grid-template-columns:minmax(0,1fr)}
 .wrap>*,section{min-width:0}
-h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;text-wrap:balance}
-h1{font-size:clamp(30px,5vw,44px);font-weight:700;letter-spacing:-.032em;line-height:1.06}
-h2{font-size:26px;font-weight:600;letter-spacing:-.022em;line-height:1.15}
-h3{font-size:19px;font-weight:600;letter-spacing:-.012em;line-height:1.3}
+h1,h2,h3{font-family:Outfit,system-ui,sans-serif;margin:0;letter-spacing:-.02em;text-wrap:balance}
+h1{font-size:clamp(32px,5.2vw,50px);font-weight:800;line-height:1.05}
+h2{font-size:28px;font-weight:800;line-height:1.1}
+h3{font-size:20px;font-weight:700;line-height:1.25}
 p{margin:0}
-.eyebrow{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--petro)}
-.lead{font-size:17px;color:var(--steel);max-width:62ch}
-.muted{color:var(--steel)}
+.eyebrow{font-size:12px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--sky)}
+.micro{font-size:10px;font-weight:700;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
+.lead{font-size:17px;color:var(--muted);max-width:62ch}
+.muted{color:var(--muted)}
 
-.glassbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-inline:-16px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;background:var(--glass);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);border-bottom:1px solid var(--glass-edge)}
-.logo{height:40px;width:auto;display:block}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .logo{background:#fff;padding:5px 9px;border-radius:8px;box-sizing:content-box}}
-:root[data-theme="dark"] .logo{background:#fff;padding:5px 9px;border-radius:8px;box-sizing:content-box}
+/* kopbalk zoals het logoblok in de zijbalk van de app */
+.appbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;margin-inline:-16px;padding:10px 16px;display:flex;justify-content:space-between;align-items:center;gap:12px;background:var(--bar);-webkit-backdrop-filter:blur(16px) saturate(180%);backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid var(--border)}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--fg)}
+.brand .mark{width:44px;height:44px;border-radius:14px;background:#fff;border:1px solid var(--border);box-shadow:var(--shadow-s);display:grid;place-items:center}
+.brand .mark img{width:32px;height:32px}
+.brand b{display:block;font-family:Outfit,sans-serif;font-size:19px;font-weight:700;letter-spacing:-.02em;line-height:1.1}
 
-.hero{display:grid;gap:18px;padding-top:28px}
-.toc{display:flex;flex-wrap:wrap;gap:8px}
-.chip{display:inline-flex;align-items:center;gap:6px;padding:7px 13px;border-radius:999px;border:1px solid var(--line);background:var(--sheet);color:var(--ink);text-decoration:none;font-size:14px;font-weight:500;box-shadow:var(--shadow-s);transition:transform 100ms ease-out,border-color 150ms ease-out;-webkit-tap-highlight-color:transparent}
+.hero{display:grid;gap:16px;padding-top:30px}
+.toc{display:flex;flex-wrap:wrap;gap:8px;padding-top:4px}
+.chip{display:inline-flex;align-items:center;gap:7px;padding:7px 14px;border-radius:999px;border:1px solid var(--border);background:var(--card);color:var(--fg);text-decoration:none;font-size:14px;font-weight:600;box-shadow:var(--shadow-s);transition:transform 100ms ease-out,border-color 150ms,background-color 150ms;-webkit-tap-highlight-color:transparent}
+.chip b{display:inline-grid;place-items:center;min-width:22px;height:22px;padding:0 6px;border-radius:999px;background:var(--sky-soft);color:var(--sky-text);font:600 12px/1 "JetBrains Mono",monospace}
 .chip:active{transform:scale(.97)}
-.chip b{color:var(--petro);font-weight:600;font-variant-numeric:tabular-nums}
-@media (hover:hover){.chip:hover{border-color:var(--petro)}}
+@media (hover:hover){.chip:hover{border-color:var(--sky-edge);background:var(--sky-soft)}}
 
-.part{display:grid;gap:10px;padding-top:12px;border-top:2px solid var(--ink)}
+.part{display:grid;gap:8px;padding:18px 4px 2px}
 .part p{max-width:62ch}
 
-.feature{display:grid;gap:18px;scroll-margin-top:80px}
-.feature .text{display:grid;gap:10px;align-content:start;max-width:64ch}
-.feature .num{font-size:12px;font-weight:600;letter-spacing:.07em;text-transform:uppercase;color:var(--petro)}
-.feature ul{margin:0;padding-left:20px;display:grid;gap:5px}
-.feature li::marker{color:var(--petro)}
-.tip{display:flex;gap:10px;align-items:flex-start;background:var(--petro-soft);border-radius:12px;padding:12px 14px;font-size:14px}
-.tip b{white-space:nowrap}
+/* elk onderdeel als glass-card, zoals de kaarten in de app */
+.feature{display:grid;gap:20px;scroll-margin-top:84px;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:22px;box-shadow:var(--shadow);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+.feature .text{display:grid;gap:10px;align-content:start;max-width:66ch}
+.feature .num{display:flex;align-items:center;gap:8px}
+.feature .num i{font-style:normal;display:inline-grid;place-items:center;width:26px;height:26px;border-radius:8px;background:var(--sky-soft);border:1px solid var(--sky-edge);color:var(--sky-text);font:600 12px/1 "JetBrains Mono",monospace;letter-spacing:0}
+.feature ul{margin:0;padding-left:20px;display:grid;gap:6px}
+.feature li::marker{color:var(--sky)}
+.tip{display:flex;gap:10px;align-items:flex-start;background:var(--sky-soft);border:1px solid var(--sky-edge);border-radius:12px;padding:12px 14px;font-size:14px}
+.tip b{white-space:nowrap;color:var(--sky-text)}
 
 figure{margin:0;display:grid;gap:8px}
-figure a{display:block;border-radius:14px;overflow:hidden;border:1px solid var(--line);box-shadow:var(--shadow-l);background:var(--sheet);transition:transform 100ms ease-out}
+figure a{display:block;border-radius:12px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow-s);background:#fff;transition:transform 100ms ease-out}
 figure a:active{transform:scale(.995)}
 figure img{display:block;width:100%;height:auto}
-figcaption{font-size:13px;color:var(--steel)}
-.phones{display:grid;grid-template-columns:repeat(2,minmax(0,260px));gap:16px;justify-content:start}
-.phones a{border-radius:28px}
+.phones{display:grid;grid-template-columns:repeat(2,minmax(0,250px));gap:16px;justify-content:start}
+.phones a{border-radius:26px}
 
-.extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px}
-.card{background:var(--sheet);border:1px solid var(--line);border-radius:14px;padding:16px;display:grid;gap:6px;align-content:start;box-shadow:var(--shadow-s)}
+.extra{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px}
+.card{background:var(--muted-soft);border:1px solid var(--border);border-radius:12px;padding:16px;display:grid;gap:6px;align-content:start}
 .card h3{font-size:17px}
-.card p{font-size:14px;color:var(--steel)}
+.card p{font-size:14px;color:var(--muted)}
 
-footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;border-top:1px solid var(--line);padding-top:24px;font-size:14px}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;gap:16px;padding:20px 4px 0;font-size:14px}
 footer .links{display:flex;flex-wrap:wrap;gap:10px}
-.btn{display:inline-flex;align-items:center;padding:10px 18px;border-radius:999px;font-weight:600;font-size:14px;text-decoration:none;border:1px solid var(--petro);color:var(--petro);transition:transform 100ms ease-out,background-color 150ms ease-out;-webkit-tap-highlight-color:transparent}
-.btn.primary{background:var(--petro);color:#fff}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:10px;font-weight:600;font-size:14px;text-decoration:none;transition:transform 100ms ease-out,filter 150ms,box-shadow 150ms;-webkit-tap-highlight-color:transparent}
+.btn.primary{color:#fff;background-image:linear-gradient(180deg,var(--btn-top),var(--btn-bot));box-shadow:0 1px 0 0 rgba(255,255,255,.25) inset,0 6px 16px -8px var(--btn-glow)}
+.btn.ghost{color:var(--fg);background:var(--card);border:1px solid var(--border);box-shadow:var(--shadow-s)}
 .btn:active{transform:scale(.97)}
-@media (hover:hover){.btn:not(.primary):hover{background:var(--petro-soft)}}
-a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offset:2px}
+@media (hover:hover){.btn.primary:hover{filter:brightness(1.05)}.btn.ghost:hover{background:var(--muted-soft)}}
+a:focus-visible,.chip:focus-visible{outline:3px solid var(--sky);outline-offset:2px}
 
 @media (min-width:860px){
   .feature.split{grid-template-columns:minmax(0,5fr) minmax(0,7fr);align-items:start}
-  .feature.split.flip .text{order:2}
 }
+@media (max-width:520px){.feature{padding:16px;border-radius:14px}}
 @media (prefers-reduced-motion: reduce){.chip,.btn,figure a{transition:none}.chip:active,.btn:active,figure a:active{transform:none}html{scroll-behavior:auto}}
 @media (prefers-reduced-motion: no-preference){html{scroll-behavior:smooth}}
-@media (prefers-reduced-transparency: reduce){.glassbar{background:var(--paper);-webkit-backdrop-filter:none;backdrop-filter:none}}
-@media (prefers-contrast: more){.glassbar{background:var(--paper);border-bottom-color:var(--ink)}.card,figure a,.chip{border-color:var(--ink)}}
-@media print{.glassbar{position:static}.toc{display:none}figure a{box-shadow:none}.feature{break-inside:avoid}}
+@media (prefers-reduced-transparency: reduce){.appbar{background:var(--bg);-webkit-backdrop-filter:none;backdrop-filter:none}.feature{-webkit-backdrop-filter:none;backdrop-filter:none}}
+@media (prefers-contrast: more){.feature,.card,figure a,.chip{border-color:var(--fg)}}
+@media print{.appbar{position:static}.toc{display:none}.feature{box-shadow:none;break-inside:avoid}}
 </style>
 </head>
 <body>
 <div class="wrap">
-  <header class="glassbar">
-    <img class="logo" src="/petroshift-logo-header.png" alt="PetroShift" width="532" height="132">
-    <span class="eyebrow">Rondleiding</span>
+  <header class="appbar">
+    <a class="brand" href="/" aria-label="PetroShift">
+      <span class="mark"><img src="walkthrough/logo-mark.png" alt="" width="32" height="32"></span>
+      <span><b>PetroShift</b><span class="micro">Ploegenrooster</span></span>
+    </a>
+    <span class="micro">Rondleiding</span>
   </header>
 
   <section class="hero">
@@ -129,14 +143,14 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
   </section>
 
   <section class="part">
-    <span class="eyebrow">Deel 1</span>
+    <span class="micro">Deel 1</span>
     <h2>Voor iedereen</h2>
     <p class="muted">Dit ziet elke medewerker na het inloggen, met je werkaccount of met e-mail en wachtwoord.</p>
   </section>
 
   <section class="feature" id="dashboard">
     <div class="text">
-      <span class="num">1 · Mijn dashboard</span>
+      <span class="num"><i>1</i><span class="micro">Mijn dashboard</span></span>
       <h3>In één oogopslag hoe vandaag eruitziet</h3>
       <ul>
         <li><b>Vandaag</b>: per dienst hoeveel mensen er staan tegen het minimum, en welke ploeg hem draait.</li>
@@ -152,7 +166,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="rooster">
     <div class="text">
-      <span class="num">2 · Mijn rooster</span>
+      <span class="num"><i>2</i><span class="micro">Mijn rooster</span></span>
       <h3>Het rooster van je ploeg, zoals je het gewend bent</h3>
       <ul>
         <li>Per dag je dienst: <b>o</b> ochtend, <b>m</b> middag, <b>n</b> nacht. Verlof, ziekte en cursus hebben een eigen code; de <b>Legenda</b> legt ze uit.</li>
@@ -168,7 +182,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature split" id="telefoon">
     <div class="text">
-      <span class="num">3 · Op je telefoon</span>
+      <span class="num"><i>3</i><span class="micro">Op je telefoon</span></span>
       <h3>Alles werkt ook op je telefoon</h3>
       <p>Onderin staan de vijf onderdelen die je het meest gebruikt. Het rooster scrolt zijwaarts, bovenaan zie je per dag of de bezetting klopt.</p>
       <div class="tip"><b>Tip</b><span>Zet PetroShift op je beginscherm: open de app in Safari (iPhone) of Chrome (Android) en kies "Zet op beginscherm". Dan opent hij als een gewone app.</span></div>
@@ -181,7 +195,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="aanvragen">
     <div class="text">
-      <span class="num">4 · Aanvragen</span>
+      <span class="num"><i>4</i><span class="micro">Aanvragen</span></span>
       <h3>Vervanger zoeken of een dienst ruilen</h3>
       <ul>
         <li><b>Vervanger zoeken</b>: kies de datum en dienst, eventueel welk kantje, en een reden. De PTL krijgt het meteen te zien en de juiste collega's worden gevraagd.</li>
@@ -196,7 +210,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="meldingen">
     <div class="text">
-      <span class="num">5 · Meldingen</span>
+      <span class="num"><i>5</i><span class="micro">Meldingen</span></span>
       <h3>Je hoort het meteen als er iets verandert</h3>
       <ul>
         <li>Een nieuwe open dienst, een goedgekeurde aanvraag of een wijziging in de indeling komt hier binnen, per dag gegroepeerd.</li>
@@ -211,7 +225,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature split" id="profiel">
     <div class="text">
-      <span class="num">6 · Profiel en verlof</span>
+      <span class="num"><i>6</i><span class="micro">Profiel en verlof</span></span>
       <h3>Je verlofsaldo en je account</h3>
       <ul>
         <li>Zie hoeveel verlof je nog hebt en hoeveel je dit jaar hebt opgenomen.</li>
@@ -225,14 +239,14 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
   </section>
 
   <section class="part">
-    <span class="eyebrow">Deel 2</span>
+    <span class="micro">Deel 2</span>
     <h2>Voor de ploegleider</h2>
     <p class="muted">Als PTL of aPTL heb je daarnaast de indeling, het vakantierooster en het overzicht van je ploeg.</p>
   </section>
 
   <section class="feature" id="indeling">
     <div class="text">
-      <span class="num">7 · Indeling</span>
+      <span class="num"><i>7</i><span class="micro">Indeling</span></span>
       <h3>De hele werkgang in één scherm ingedeeld</h3>
       <ul>
         <li>Per dienst wie op welk kantje staat. Klik bij een positie op <b>toevoegen</b> en kies iemand uit wie er die dienst is.</li>
@@ -248,7 +262,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="vakantierooster">
     <div class="text">
-      <span class="num">8 · Vakantierooster</span>
+      <span class="num"><i>8</i><span class="micro">Vakantierooster</span></span>
       <h3>De vakantieperiode rond zonder belrondje</h3>
       <ul>
         <li>Maak een periode aan, bijvoorbeeld de zomer, en klik <b>Analyseren</b>: je ziet per dag en dienst waar een tekort is.</li>
@@ -263,7 +277,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="team">
     <div class="text">
-      <span class="num">9 · Team</span>
+      <span class="num"><i>9</i><span class="micro">Team</span></span>
       <h3>Wie er is en wat iedereen kan</h3>
       <ul>
         <li>Per ploeg de medewerkers, met of ze vandaag werken, vrij, met verlof of ziek zijn.</li>
@@ -278,7 +292,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="stop">
     <div class="text">
-      <span class="num">10 · Stop en turnaround</span>
+      <span class="num"><i>10</i><span class="micro">Stop en turnaround</span></span>
       <h3>Een stop plannen naast het gewone rooster</h3>
       <ul>
         <li>Maak een stopperiode aan en kies de <b>deelnemers</b>, per ploeg gegroepeerd.</li>
@@ -294,7 +308,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
 
   <section class="feature" id="meer">
     <div class="text">
-      <span class="num">11 · Verder</span>
+      <span class="num"><i>11</i><span class="micro">Verder</span></span>
       <h3>Wat er nog meer in zit</h3>
     </div>
     <div class="extra">
@@ -307,7 +321,7 @@ a:focus-visible,.chip:focus-visible{outline:3px solid var(--petro);outline-offse
   <footer>
     <p class="muted">Schermafbeeldingen uit een demo-omgeving met fictieve medewerkers. Wat je ziet hangt af van je rol en de onderdelen die je bedrijf gebruikt.</p>
     <div class="links">
-      <a class="btn" href="/p/nltrvn06/petroshift.html">Over PetroShift</a>
+      <a class="btn ghost" href="/p/nltrvn06/petroshift.html">Over PetroShift</a>
       <a class="btn primary" href="/#demo">Demo aanvragen</a>
     </div>
   </footer>
